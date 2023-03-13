@@ -17,6 +17,7 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Product\ColorListScreen;
 use App\Orchid\Screens\Product\ProductEditScreen;
 use App\Orchid\Screens\Product\ProductListScreen;
 use App\Orchid\Screens\ProductScreen;
@@ -168,3 +169,22 @@ Route::screen('brands/create', BrandEditScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('brands')
         ->push(__('Create'), route('brands.create')));
+
+
+Route::screen('colors', ColorListScreen::class)
+    ->name('colors')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('colors'), route('colors')));
+
+Route::screen('colors/{color}/edit', BrandEditScreen::class)
+    ->name('colors.edit')
+    ->breadcrumbs(fn (Trail $trail, $color) => $trail
+        ->parent('colors')
+        ->push($color->name, route('colors.edit', $color)));
+
+Route::screen('colors/create', BrandEditScreen::class)
+    ->name('colors.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('colors')
+        ->push(__('Create'), route('colors.create')));
