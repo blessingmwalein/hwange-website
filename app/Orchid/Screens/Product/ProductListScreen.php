@@ -91,11 +91,20 @@ class ProductListScreen extends Screen
             'product.banner_text' => 'required',
         ]);
 
-        dd($request->get('product'));
+        dd($request);
 
         $product
-            ->fill($request->get('product'))
+            ->fill([
+                'name' => $request->get('product.name'),
+                'quantity' => $request->get('product.quantity'),
+                'isOnPromotion' => $request->get('product.isOnPromotion'),
+                'category_id' => $request->get('product.category_id'),
+                'banner_text' => $request->get('product.banner_text'),
+                'description' => $request->get('product.description'),
+            ])
             ->save();
+
+            
 
         Toast::info(__('Product was saved.'));
 

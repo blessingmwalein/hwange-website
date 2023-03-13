@@ -3,6 +3,10 @@
 namespace App\Orchid\Screens\Product;
 
 use App\Models\Product;
+use App\Models\ProductColor;
+use App\Models\ProductImage;
+use App\Models\ProductPrice;
+use App\Models\ProductSpecification;
 use App\Orchid\Layouts\Product\ProductEditLayout;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -17,7 +21,7 @@ use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 use Orchid\Support\Color as ColorAlias;
-
+use Termwind\Components\Dd;
 
 class ProductEditScreen extends Screen
 {
@@ -104,21 +108,59 @@ class ProductEditScreen extends Screen
 
         ]);
 
-        dd($request->get('product'));
         $newProduct = $product
             ->fill([
-                'name' => $request->get('product.name'),
-                'quantity' => $request->get('product.quantity'),
-                'isOnPromotion' => $request->get('product.isOnPromotion'),
-                'category_id' => $request->get('product.category_id'),
-                'banner_text' => $request->get('product.banner_text'),
-                'description' => $request->get('product.description'),
+                'name' => $request->input('product.name'),
+                'quantity' => $request->input('product.quantity'),
+                'isOnPromotion' => $request->input('product.isOnPromotion'),
+                'category_id' => $request->input('product.category_id'),
+                'banner_text' => $request->input('product.banner_text'),
+                'description' => $request->input('product.description'),
             ])
             ->save();
 
-        $product->colors()->sync($request->get('product.colors'));
-        $product->specifications()->sync($request->get('product.specifications'));
+        if ($request->input('product.colors') != null) {
+            $colors = $request->input('product.colors');
+            foreach ($colors as $key => $color) {
+                ProductColor::create([
+                    'product_id' => $product->id,
+                    'color_id' => $color
+                ]);
+            }
+        }
 
+        if ($request->input('product.specifications') != null) {
+            $specifications = $request->input('product.specifications');
+            foreach ($specifications as $key => $specification) {
+                ProductSpecification::create([
+                    'product_id' => $product->id,
+                    'specification_id' => $specification
+                ]);
+            }
+        }
+
+        for($i = 0; $i < 4; $i++){
+            if ($request->input('product.Currency'.$i) != null) {
+                ProductPrice::create([
+                    'product_id' => $product->id,
+                    'currency_id' => $request->input('product.Currency'.$i),
+                    'price' => $request->input('product.Price'.$i),
+                ]);
+            }
+
+        }
+     
+
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
+            foreach ($files as $file) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $file->store('products',  ['disk' => 'public']),
+                    'is_main' => '0',
+                ]);
+            }
+        }
 
         Toast::info(__('Product was saved.'));
 

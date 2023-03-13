@@ -64,7 +64,11 @@ class Product extends Model
 
     public function colors()
     {
-        return $this->belongsToMany(ProductColor::class);
+        return $this->hasMany(ProductColor::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 
     public function prices()

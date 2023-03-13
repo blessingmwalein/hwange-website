@@ -31,14 +31,18 @@ class ProductListLayout extends Table
     {
         return [
             TD::make('id', __('ID'))
-            ->sort()
-            ->cantHide()
-            ->filter(Input::make())
-            ->render(fn (Product $product) => // Please use view('path')
-            "<img src='/storage/{$product->images[0]->image}'
-                                          alt='sample'
-                                          class='mw-100 d-block img-fluid rounded-1' width='50'>
-                                        <span class='small text-muted mt-1 mb-0'># {$product->id}</span>"),
+                ->sort()
+                ->cantHide()
+                ->filter(Input::make())
+                ->render(
+                    function (Product $product) {
+                        $url = $product->images ? $product->images[0]->image : 'default.png';
+                        return "<img src='/storage/{$url}'
+                alt='sample'
+                class='mw-100 d-block img-fluid rounded-1' width='50'>
+              <span class='small text-muted mt-1 mb-0'># {$product->id}</span>";
+                    }
+                ),
             TD::make('name', 'Name')
                 ->sort()
                 ->filter(Input::make())
@@ -47,18 +51,18 @@ class ProductListLayout extends Table
             TD::make('quantity', 'Quantity')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Product $product) => Str::limit($product->name, 200)),
+                ->render(fn (Product $product) => Str::limit($product->quantity, 200)),
 
             TD::make('price', 'Price')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Product $product) =>$product->getMainPrice()->currency->name . Str::limit($product->getMainPrice()->price, 200)),
+                ->render(fn (Product $product) => $product->getMainPrice()->currency->code . Str::limit($product->getMainPrice()->price, 200)),
 
             TD::make('isOnPromotion', 'On Promotion')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Product $product) => Str::limit($product->name, 200)),
-            
+                ->render(fn (Product $product) => Str::limit($product->isOnPromotion =='1'? "Yes" :"No", 200)),
+
 
             TD::make('updated_at', __('Last edit'))
                 ->sort()
@@ -67,8 +71,8 @@ class ProductListLayout extends Table
             TD::make('created_at', __('Created At'))
                 ->sort()
                 ->filter(DateTimer::make('open')
-                ->title('Created Date')
-                ->allowInput())
+                    ->title('Created Date')
+                    ->allowInput())
 
                 ->render(fn (Product $product) => $product->updated_at->toDateTimeString()),
 
