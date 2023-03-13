@@ -36,38 +36,11 @@
 
                                 <div id="sidebarNav1Collapse" class="collapse" data-parent="#sidebarNav">
                                     <ul id="sidebarNav1" class="list-unstyled dropdown-list">
-                                        <!-- Menu List -->
-                                        <li><a class="dropdown-item" href="#">Accessories<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
+                                        @foreach($categories as $category)
+                                            <li><a class="dropdown-item" href="#">{{$category->name}}<span
+                                                        class="text-gray-25 font-size-12 font-weight-normal">
                                                     (56)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">Cameras & Photography<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (11)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">Computer Components<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (22)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">Gadgets<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal"> (5)</span></a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">Home Entertainment<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal"> (7)</span></a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">Laptops & Computers<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (42)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">Printers & Ink<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (63)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">Smart Phones & Tablets<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (11)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">TV & Audio<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (66)</span></a></li>
-                                        <li><a class="dropdown-item" href="#">Video Games & Consoles<span
-                                                    class="text-gray-25 font-size-12 font-weight-normal">
-                                                    (31)</span></a></li>
-                                        <!-- End Menu List -->
+                                        @endforeach
                                     </ul>
                                 </div>
                             </li>
@@ -75,15 +48,12 @@
                                 <a class="dropdown-current active" href="#">Smart Phones & Tablets <span
                                         class="text-gray-25 font-size-12 font-weight-normal"> (50)</span></a>
 
-                                <ul class="list-unstyled dropdown-list">
-                                    <!-- Menu List -->
-                                    <li><a class="dropdown-item" href="#">Smartphones<span
+                                <ul class="list-unstyled dropdown-list"
+                                    @foreach($randomCategory as $category)
+                                    <li><a class="dropdown-item" href="#">{{$category->name}}<span
                                                 class="text-gray-25 font-size-12 font-weight-normal"> (30)</span></a>
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Tablets<span
-                                                class="text-gray-25 font-size-12 font-weight-normal"> (20)</span></a>
-                                    </li>
-                                    <!-- End Menu List -->
+                                    @endforeach
                                 </ul>
                             </li>
                         </ul>
@@ -543,7 +513,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -579,7 +549,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -612,7 +582,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -646,7 +616,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -679,7 +649,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -712,7 +682,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -748,7 +718,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -782,7 +752,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -815,7 +785,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -848,7 +818,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -881,7 +851,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -918,7 +888,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -951,7 +921,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -984,7 +954,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1017,7 +987,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1051,7 +1021,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1087,7 +1057,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1120,7 +1090,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1154,7 +1124,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1188,7 +1158,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1249,7 +1219,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1305,7 +1275,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1361,7 +1331,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1418,7 +1388,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1474,7 +1444,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1530,7 +1500,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1586,7 +1556,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1643,7 +1613,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1699,7 +1669,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1755,7 +1725,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1811,7 +1781,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1868,7 +1838,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1924,7 +1894,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1980,7 +1950,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2036,7 +2006,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2093,7 +2063,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2149,7 +2119,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2205,7 +2175,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2261,7 +2231,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2317,7 +2287,7 @@
                                             </div>
                                             <div class="product-item__footer">
                                                 <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2386,7 +2356,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2450,7 +2420,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2514,7 +2484,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2578,7 +2548,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2642,7 +2612,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2706,7 +2676,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2775,7 +2745,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2839,7 +2809,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2903,7 +2873,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -2967,7 +2937,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -3031,7 +3001,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -3095,7 +3065,7 @@
                                                 </div>
                                                 <div
                                                     class="flex-horizontal-center justify-content-between justify-content-wd-center flex-wrap border-top pt-3">
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -3119,7 +3089,7 @@
                     <!-- End Shop Pagination -->
                 </div>
             </div>
-            
+
         </div>
     </main>
 
