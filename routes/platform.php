@@ -17,9 +17,14 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Product\ColorEditScreen;
 use App\Orchid\Screens\Product\ColorListScreen;
+use App\Orchid\Screens\Product\CurrencyEditScreen;
+use App\Orchid\Screens\Product\CurrencyListScreen;
 use App\Orchid\Screens\Product\ProductEditScreen;
 use App\Orchid\Screens\Product\ProductListScreen;
+use App\Orchid\Screens\Product\SpecificationEditScreen;
+use App\Orchid\Screens\Product\SpecificationListScreen;
 use App\Orchid\Screens\ProductScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -177,14 +182,51 @@ Route::screen('colors', ColorListScreen::class)
         ->parent('platform.index')
         ->push(__('colors'), route('colors')));
 
-Route::screen('colors/{color}/edit', BrandEditScreen::class)
+Route::screen('colors/{color}/edit', ColorEditScreen::class)
     ->name('colors.edit')
     ->breadcrumbs(fn (Trail $trail, $color) => $trail
         ->parent('colors')
         ->push($color->name, route('colors.edit', $color)));
 
-Route::screen('colors/create', BrandEditScreen::class)
+Route::screen('colors/create', ColorEditScreen::class)
     ->name('colors.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('colors')
         ->push(__('Create'), route('colors.create')));
+
+Route::screen('specifications', SpecificationListScreen::class)
+    ->name('specifications')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('specifications'), route('specifications')));
+
+Route::screen('specifications/{specification}/edit', SpecificationEditScreen::class)
+    ->name('specifications.edit')
+    ->breadcrumbs(fn (Trail $trail, $specification) => $trail
+        ->parent('specifications')
+        ->push($specification->name, route('specifications.edit', $specification)));
+
+Route::screen('specifications/create', SpecificationEditScreen::class)
+    ->name('specifications.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('specifications')
+        ->push(__('Create'), route('specifications.create')));
+
+    //currency
+Route::screen('currencies', CurrencyListScreen::class)
+    ->name('currencies')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('currencies'), route('currencies')));
+
+Route::screen('currencies/{currency}/edit', CurrencyEditScreen::class)
+    ->name('currencies.edit')
+    ->breadcrumbs(fn (Trail $trail, $currency) => $trail
+        ->parent('currencies')
+        ->push($currency->name, route('currencies.edit', $currency)));
+
+Route::screen('currencies/create', CurrencyEditScreen::class)
+    ->name('currencies.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('currencies')
+        ->push(__('Create'), route('currencies.create')));

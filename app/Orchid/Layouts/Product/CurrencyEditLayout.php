@@ -2,11 +2,14 @@
 
 namespace App\Orchid\Layouts\Product;
 
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class CurrencyEditLayout extends Table
+class CurrencyEditLayout extends Rows
 {
+   
     /**
      * Data source.
      *
@@ -22,8 +25,29 @@ class CurrencyEditLayout extends Table
      *
      * @return TD[]
      */
-    protected function columns(): iterable
+    protected function fields(): iterable
     {
-        return [];
+        return [
+            Input::make('currency.name')
+                ->type('text')
+                ->max(255)
+                ->required()
+                ->title(__('Name'))
+                ->placeholder(__('Name')),
+
+            Input::make('currency.code')
+                ->type('text')
+                ->max(255)
+                ->required()
+                ->title(__('Code'))
+                ->placeholder(__('Code')),
+
+            Input::make('currency.symbol')
+                ->type('text')
+                ->max(255)
+                ->required()
+                ->title(__('Symbol'))
+                ->placeholder(__('$')),
+        ];
     }
 }

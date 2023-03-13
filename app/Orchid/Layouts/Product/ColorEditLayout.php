@@ -2,11 +2,14 @@
 
 namespace App\Orchid\Layouts\Product;
 
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class ColorEditLayout extends Table
+class ColorEditLayout extends Rows
 {
+   
     /**
      * Data source.
      *
@@ -22,8 +25,15 @@ class ColorEditLayout extends Table
      *
      * @return TD[]
      */
-    protected function columns(): iterable
+    protected function fields(): iterable
     {
-        return [];
+        return [
+            Input::make('color.name')
+                ->type('text')
+                ->max(255)
+                ->required()
+                ->title(__('Name'))
+                ->placeholder(__('Name')),
+        ];
     }
 }

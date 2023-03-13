@@ -2,11 +2,14 @@
 
 namespace App\Orchid\Layouts\Product;
 
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class SpecificationEditLayout extends Table
+class SpecificationEditLayout extends Rows
 {
+   
     /**
      * Data source.
      *
@@ -22,8 +25,15 @@ class SpecificationEditLayout extends Table
      *
      * @return TD[]
      */
-    protected function columns(): iterable
+    protected function fields(): iterable
     {
-        return [];
+        return [
+            Input::make('specification.name')
+                ->type('text')
+                ->max(255)
+                ->required()
+                ->title(__('Name'))
+                ->placeholder(__('Name')),
+        ];
     }
 }

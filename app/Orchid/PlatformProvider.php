@@ -45,6 +45,9 @@ class PlatformProvider extends OrchidServiceProvider
                 ->list([
                     Menu::make('All')->route('products')->icon('list'),
                     Menu::make('Create')->route('products.create')->icon('plus'),
+                    Menu::make('Colors')->route('colors')->icon('list'),
+                    Menu::make('Currencies')->route('currencies')->icon('list'),
+                    Menu::make('Specifications')->route('specifications')->icon('list')
                 ]),
             Menu::make('Brands')
                 ->icon('bag')

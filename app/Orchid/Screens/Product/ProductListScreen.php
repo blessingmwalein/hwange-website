@@ -2,7 +2,18 @@
 
 namespace App\Orchid\Screens\Product;
 
+use App\Models\Product;
+use App\Models\User;
+use App\Orchid\Layouts\Product\ProductListLayout;
+use Illuminate\Http\Request;
+use Orchid\Attachment\File;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Support\Facades\Layout;
+
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Toast;
+use Termwind\Components\Dd;
 
 class ProductListScreen extends Screen
 {
@@ -13,7 +24,10 @@ class ProductListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'products' => Product::defaultSort('created_at', 'desc')
+                ->paginate(),
+        ];
     }
 
     /**
@@ -23,7 +37,12 @@ class ProductListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'ProductListScreen';
+        return 'Product';
+    }
+
+    public function description(): ?string
+    {
+        return 'All products';
     }
 
     /**
@@ -33,7 +52,12 @@ class ProductListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+
+            Link::make(__('Add'))
+                ->icon('plus')
+                ->route('products.create'),
+        ];
     }
 
     /**
@@ -43,6 +67,48 @@ class ProductListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            // CategoryFiltersLayout::class,
+            ProductListLayout::class,
+            // Layout::modal('asyncEditUserModal', CategoryEditLayout::class)
+            //     ->async('asyncGetCategory'),
+        ];
+    }
+    public function asyncGetBrand(Product $product): iterable
+    {
+        return [
+            'product' => $product,
+        ];
+    }
+
+    public function save(Product $product, Request $request)
+    {
+        $request->validate([
+            'product.name' => 'required',
+            'product.quantity' => 'required',
+            'product.isOnPromotion' => 'required',
+            'product.category_id' => 'required',
+            'product.banner_text' => 'required',
+        ]);
+
+        dd($request->get('product'));
+
+        $product
+            ->fill($request->get('product'))
+            ->save();
+
+        Toast::info(__('Product was saved.'));
+
+        return redirect()->route('products');
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function remove(Request $request): void
+    {
+        Product::findOrFail($request->get('id'))->delete();
+
+        Toast::info(__('Product was removed'));
     }
 }

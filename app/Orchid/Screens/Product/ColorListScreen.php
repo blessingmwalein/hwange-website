@@ -2,7 +2,17 @@
 
 namespace App\Orchid\Screens\Product;
 
+use App\Models\Color;
+use App\Models\User;
+use App\Orchid\Layouts\Product\ColorListLayout;
+use Illuminate\Http\Request;
+use Orchid\Attachment\File;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Support\Facades\Layout;
+
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Toast;
 
 class ColorListScreen extends Screen
 {
@@ -13,7 +23,10 @@ class ColorListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'colors' => Color::defaultSort('created_at', 'desc')
+                ->paginate(),
+        ];
     }
 
     /**
@@ -23,7 +36,12 @@ class ColorListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'ColorListScreen';
+        return 'Color';
+    }
+
+    public function description(): ?string
+    {
+        return 'All colors';
     }
 
     /**
@@ -33,7 +51,12 @@ class ColorListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+
+            Link::make(__('Add'))
+                ->icon('plus')
+                ->route('colors.create'),
+        ];
     }
 
     /**
@@ -43,6 +66,50 @@ class ColorListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            // CategoryFiltersLayout::class,
+            ColorListLayout::class,
+            // Layout::modal('asyncEditUserModal', CategoryEditLayout::class)
+            //     ->async('asyncGetCategory'),
+        ];
     }
+    public function asyncGetBrand(Color $color): iterable
+    {
+        return [
+            'color' => $color,
+        ];
+    }
+
+    public function save(Color $color, Request $request)
+    {
+        $request->validate([
+            'color.name' => [
+                'required'
+            ],
+        ]);
+
+ 
+
+        $color
+            ->fill([
+                'name' => $request->input('color.name')
+            ])
+            ->save();
+
+
+        Toast::info(__('Color was saved.'));
+
+        return redirect()->route('colors');
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function remove(Request $request): void
+    {
+        Color::findOrFail($request->get('id'))->delete();
+
+        Toast::info(__('Color was removed'));
+    }
+
 }

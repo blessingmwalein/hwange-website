@@ -2,7 +2,19 @@
 
 namespace App\Orchid\Screens\Product;
 
+use App\Models\Specifications;
+use App\Models\User;
+use App\Orchid\Layouts\Product\ColorListLayout;
+use App\Orchid\Layouts\Product\CurrencyListLayout;
+use App\Orchid\Layouts\Product\SpecificationListLayout;
+use Illuminate\Http\Request;
+use Orchid\Attachment\File;
+use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Support\Facades\Layout;
+
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Toast;
 
 class SpecificationListScreen extends Screen
 {
@@ -13,7 +25,10 @@ class SpecificationListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'specifications' => Specifications::defaultSort('created_at', 'desc')
+                ->paginate(),
+        ];
     }
 
     /**
@@ -23,7 +38,12 @@ class SpecificationListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'SpecificationListScreen';
+        return 'Specifications';
+    }
+
+    public function description(): ?string
+    {
+        return 'All specifications';
     }
 
     /**
@@ -33,7 +53,12 @@ class SpecificationListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+
+            Link::make(__('Add'))
+                ->icon('plus')
+                ->route('specifications.create'),
+        ];
     }
 
     /**
@@ -43,6 +68,50 @@ class SpecificationListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            // CategoryFiltersLayout::class,
+            SpecificationListLayout::class,
+            // Layout::modal('asyncEditUserModal', CategoryEditLayout::class)
+            //     ->async('asyncGetCategory'),
+        ];
     }
+    public function asyncGetCurrency(Specifications $specification): iterable
+    {
+        return [
+            'specification' => $specification,
+        ];
+    }
+
+    public function save(Specifications $specification, Request $request)
+    {
+        $request->validate([
+            'specification.name' => [
+                'required'
+            ],
+        ]);
+
+ 
+
+        $specification
+            ->fill([
+                'name' => $request->input('specification.name')
+            ])
+            ->save();
+
+
+        Toast::info(__('Specifications was saved.'));
+
+        return redirect()->route('specifications');
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function remove(Request $request): void
+    {
+        Specifications::findOrFail($request->get('id'))->delete();
+
+        Toast::info(__('Specifications was removed'));
+    }
+
 }
