@@ -63,4 +63,9 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    public function customerDetails()
+    {
+        return $this->hasOne(CustomerDetails::class, 'user_id', 'id');
+    }
 }

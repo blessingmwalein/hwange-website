@@ -54,8 +54,8 @@ class OrderListScreen extends Screen
         return [
 
             Link::make(__('Create New Order'))
-            ->icon('plus')
-            ->route('orders.create'),
+                ->icon('plus')
+                ->route('orders.create'),
         ];
     }
 
@@ -80,7 +80,6 @@ class OrderListScreen extends Screen
 
     public function save(Order $order, Request $request)
     {
-       
     }
 
     /**
@@ -88,9 +87,12 @@ class OrderListScreen extends Screen
      */
     public function remove(Request $request): void
     {
-        Order::findOrFail($request->get('id'))->delete();
+        $order =  Order::findOrFail($request->get('id'));
+
+        $order->items()->delete();
+
+        $order->delete();
 
         Toast::info(__('Order was removed'));
     }
-
 }

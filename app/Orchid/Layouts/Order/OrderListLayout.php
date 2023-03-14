@@ -15,6 +15,7 @@ use Orchid\Screen\Layouts\Persona;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 use Illuminate\Support\Str;
+use Orchid\Screen\Fields\Select;
 
 class OrderListLayout extends Table
 {
@@ -41,12 +42,20 @@ class OrderListLayout extends Table
                 ->render(fn (Order $order) => Str::limit($order->user->email, 200)),
             TD::make('status', 'Status')
                 ->sort()
-                ->filter(Input::make())
+                ->filter(Select::make()
+                    ->options([
+                        'pending' => 'Pending',
+                        'processing' => 'Processing',
+                        'completed' => 'Completed',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->title('Status')
+                    ->empty('No select'),)
                 ->render(fn (Order $order) => Str::limit($order->status, 200)),
             TD::make('total', 'Total')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Order $order) =>$order->currency->code. Str::limit($order->total, 200)),
+                ->render(fn (Order $order) => $order->currency->code . Str::limit($order->total, 200)),
 
             TD::make('updated_at', __('Last edit'))
                 ->sort()
@@ -64,11 +73,14 @@ class OrderListLayout extends Table
 
                         Link::make(__('View'))
                             ->route('orders.show', $order->id)
+                            ->icon('eye'),
+                        Link::make(__('Edit'))
+                            ->route('orders.edit', $order->id)
                             ->icon('pencil'),
 
                         Button::make(__('Delete'))
                             ->icon('trash')
-                            ->confirm(__('Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
+                            ->confirm(__('Once you delete this order information will not be available.'))
                             ->method('remove', [
                                 'id' => $order->id,
                             ]),

@@ -5,6 +5,7 @@ namespace App\Orchid\Layouts\Order;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Currency;
+use App\Models\Product;
 use App\Models\Specifications;
 use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Group;
@@ -18,6 +19,8 @@ use Orchid\Screen\Layout;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
+use Orchid\Platform\Models\User;
+
 
 class OrderEditLayout extends Rows
 {
@@ -39,22 +42,8 @@ class OrderEditLayout extends Rows
      */
     protected function fields(): iterable
     {
-        $currencies = Currency::all();
         return [
-            Input::make('order.name')
-                ->type('text')
-                ->max(255)
-                ->required()
-                ->title(__('Name'))
-                ->placeholder(__('Name')),
-
-
-            CheckBox::make('order.isOnPromotion')
-                ->value(0)
-                ->title('Is On Promotion'),
-
-            //can see if there is produt on edit
-
+ 
             Select::make('order.user_id')
                 ->fromModel(User::class, 'name', 'id')
                 ->title('Client')
@@ -63,13 +52,29 @@ class OrderEditLayout extends Rows
             Input::make('order.total')
                 ->type('number')
                 ->required()
+                ->title(__('Total'))
+                ->placeholder(__('0')),
+
+            Input::make('order.quantity')
+                ->type('number')
+                ->required()
                 ->title(__('Quantity'))
-                ->placeholder(__('Quantity')),
+                ->placeholder(__('0')),
 
             Select::make('order.currency_id')
-                ->fromModel(User::class, 'name', 'id')
+                ->fromModel(Currency::class, 'name', 'id')
                 ->title('Currency')
                 ->empty('No select'),
+            Select::make('order.color')
+                ->fromModel(Color::class, 'name', 'name')
+                ->title('Color')
+                ->empty('No select'),
+
+            Select::make('order.product_id')
+                ->fromModel(Product::class, 'name', 'id')
+                ->title('Product')
+                ->empty('No select'),
+
             Select::make('order.status')
                 ->options([
                     'pending' => 'Pending',
@@ -77,18 +82,9 @@ class OrderEditLayout extends Rows
                     'completed' => 'Completed',
                     'cancelled' => 'Cancelled',
                 ])
-                ->title('Currency')
+                ->title('Status')
                 ->empty('No select'),
 
-            Select::make('order.colors.')
-                ->fromModel(Color::class, 'name', 'id')
-                ->multiple()
-                ->title('Product Colors'),
-
-            Select::make('order.specifications.')
-                ->fromModel(Specifications::class, 'name', 'id')
-                ->multiple()
-                ->title('Product Specifications'),
 
             TextArea::make('order.order_notes')
                 ->required()
