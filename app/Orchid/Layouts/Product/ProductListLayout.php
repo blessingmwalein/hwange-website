@@ -36,7 +36,7 @@ class ProductListLayout extends Table
                 ->filter(Input::make())
                 ->render(
                     function (Product $product) {
-                        $url = $product->images ? $product->images[0]->image : 'default.png';
+                        $url = count($product->images) > 0 ? $product->images[0]->image : 'default.png';
                         return "<img src='/storage/{$url}'
                 alt='sample'
                 class='mw-100 d-block img-fluid rounded-1' width='50'>
@@ -56,12 +56,12 @@ class ProductListLayout extends Table
             TD::make('price', 'Price')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Product $product) => $product->getMainPrice()->currency->code . Str::limit($product->getMainPrice()->price, 200)),
+                ->render(fn (Product $product) => $product->prices[0]->currency->code . Str::limit($product->prices[0]->price, 200)),
 
             TD::make('isOnPromotion', 'On Promotion')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Product $product) => Str::limit($product->isOnPromotion =='1'? "Yes" :"No", 200)),
+                ->render(fn (Product $product) => Str::limit($product->isOnPromotion == '1' ? "Yes" : "No", 200)),
 
 
             TD::make('updated_at', __('Last edit'))
@@ -83,8 +83,8 @@ class ProductListLayout extends Table
                     ->icon('options-vertical')
                     ->list([
 
-                        Link::make(__('Edit'))
-                            ->route('products.edit', $product->id)
+                        Link::make(__('View'))
+                            ->route('products.show', $product->id)
                             ->icon('pencil'),
 
                         Button::make(__('Delete'))

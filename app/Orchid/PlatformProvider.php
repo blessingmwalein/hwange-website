@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid;
 
+use App\Models\Order;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemPermission;
 use Orchid\Platform\OrchidServiceProvider;
@@ -56,7 +57,14 @@ class PlatformProvider extends OrchidServiceProvider
                     Menu::make('Create')->route('brands.create')->icon('plus'),
                 ]),
 
-          
+            Menu::make('Orders')
+                ->icon('basket')
+                ->route('orders')
+                ->title('Clients')
+                ->badge(function () {
+                    return Order::where('status', 'pending')->count();
+                })->divider(),
+                
             // Menu::make('Cards')
             //     ->icon('grid')
             //     ->route('platform.example.cards')

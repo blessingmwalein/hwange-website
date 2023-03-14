@@ -16,6 +16,9 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Order\OrderEditSCreen;
+use App\Orchid\Screens\Order\OrderListScreen;
+use App\Orchid\Screens\Order\OrderSingleScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Product\ColorEditScreen;
 use App\Orchid\Screens\Product\ColorListScreen;
@@ -23,6 +26,7 @@ use App\Orchid\Screens\Product\CurrencyEditScreen;
 use App\Orchid\Screens\Product\CurrencyListScreen;
 use App\Orchid\Screens\Product\ProductEditScreen;
 use App\Orchid\Screens\Product\ProductListScreen;
+use App\Orchid\Screens\Product\SingleProductScreen;
 use App\Orchid\Screens\Product\SpecificationEditScreen;
 use App\Orchid\Screens\Product\SpecificationListScreen;
 use App\Orchid\Screens\ProductScreen;
@@ -150,6 +154,12 @@ Route::screen('products/{product}/edit', ProductEditScreen::class)
         ->parent('products')
         ->push($product->name, route('products.edit', $product)));
 
+Route::screen('products/{product}/show', SingleProductScreen::class)
+    ->name('products.show')
+    ->breadcrumbs(fn (Trail $trail, $product) => $trail
+        ->parent('products')
+        ->push($product->name, route('products.show', $product)));
+
 Route::screen('products/create', ProductEditScreen::class)
     ->name('products.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
@@ -212,7 +222,7 @@ Route::screen('specifications/create', SpecificationEditScreen::class)
         ->parent('specifications')
         ->push(__('Create'), route('specifications.create')));
 
-    //currency
+//currency
 Route::screen('currencies', CurrencyListScreen::class)
     ->name('currencies')
     ->breadcrumbs(fn (Trail $trail) => $trail
@@ -230,3 +240,28 @@ Route::screen('currencies/create', CurrencyEditScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('currencies')
         ->push(__('Create'), route('currencies.create')));
+
+
+Route::screen('orders', OrderListScreen::class)
+    ->name('orders')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('orders'), route('orders')));
+
+Route::screen('orders/{order}/edit', OrderEditSCreen::class)
+    ->name('orders.edit')
+    ->breadcrumbs(fn (Trail $trail, $order) => $trail
+        ->parent('orders')
+        ->push($order->id, route('orders.edit', $order)));
+        
+        Route::screen('orders/create', OrderEditSCreen::class)
+        ->name('orders.create')
+        ->breadcrumbs(fn (Trail $trail) => $trail
+            ->parent('orders')
+            ->push(__('Create'), route('orders.create')));
+
+Route::screen('orders/{order}/show', OrderSingleScreen::class)
+    ->name('orders.show')
+    ->breadcrumbs(fn (Trail $trail, $order) => $trail
+        ->parent('orders')
+        ->push($order->id, route('orders.show', $order)));

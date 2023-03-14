@@ -101,11 +101,8 @@ class ProductEditScreen extends Screen
         $request->validate([
             'product.name' => 'required',
             'product.quantity' => 'required',
-            'product.isOnPromotion' => 'required',
             'product.category_id' => 'required',
-            'product.banner_text' => 'required',
             'product.description' => 'required',
-
         ]);
 
         $newProduct = $product

@@ -58,18 +58,18 @@ class ProductEditLayout extends Rows
                 ->value(0)
                 ->title('Is On Promotion'),
 
+                //can see if there is produt on edit
+                
             Select::make('product.category_id')
                 ->fromModel(Category::class, 'name', 'id')
                 ->empty('No select'),
 
-            Relation::make('product.colors.')
+            Select::make('product.colors.')
                 ->fromModel(Color::class, 'name', 'id')
                 ->multiple()
                 ->title('Product Colors'),
 
-
-
-            Relation::make('product.specifications.')
+            Select::make('product.specifications.')
                 ->fromModel(Specifications::class, 'name', 'id')
                 ->multiple()
                 ->title('Product Specifications'),
@@ -147,7 +147,6 @@ class ProductEditLayout extends Rows
                 ->rows(3),
 
             TextArea::make('product.banner_text')
-                ->required()
                 ->title(__('Baner Text'))
                 ->rows(3)
         ];
