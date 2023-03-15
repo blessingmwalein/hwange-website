@@ -7,6 +7,8 @@ use Livewire\Component;
 class ProductCard extends Component
 {
     public $product;
+    public $qty = 1;
+    public $color = 'none';
 
     public function mount($product)
     {
@@ -19,5 +21,35 @@ class ProductCard extends Component
         return view('livewire.product-card' , [
             'product' => $this->product
         ]);
+    }
+
+    public function addToCart()
+    {
+        $cart = auth()->user()->getCart();
+        //check if product is already in cart
+        $cartItem = $cart->cartItems->where('product_id', $this->product->id)->first();
+        if ($cartItem) {
+            $cartItem->update([
+                'quantity' => $cartItem->quantity + $this->qty,
+                'color' => $this->color
+            ]);
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Product quantity updated"
+            ]);
+        } else {
+            $cart->cartItems()->create([
+                'product_id' => $this->product->id,
+                'quantity' => $this->qty,
+                'color' => $this->color,
+            ]);
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'success',
+                'message'=>"Product added to cart"
+            ]);
+        }
+
+        $this->emit('addToCart');
     }
 }

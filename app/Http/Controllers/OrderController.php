@@ -12,9 +12,12 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        //
+        return view('pages.orders', [
+            'orders' => auth()->user()->orders,
+            'user' => auth()->user(),
+        ])->layoutData(['page' => 'order']);
     }
 
     /**
@@ -36,9 +39,12 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order): Response
+    public function show(Order $order)
     {
-        //
+        return view('pages.order', [
+            'order' => $order,
+            'user' => auth()->user(),
+        ]);
     }
 
     /**
@@ -63,5 +69,24 @@ class OrderController extends Controller
     public function destroy(Order $order): RedirectResponse
     {
         //
+    }
+    public function cart()
+    {
+        return view('pages.cart', [
+            'cart' => auth()->user()->getCart(),
+        ]);
+    }
+    public function checkout()
+    {
+        return view('pages.checkout', [
+            'cart' => auth()->user()->getCart(),
+        ]);
+    }
+    public function account()
+    {
+        return view('pages.account', [
+            'orders' => auth()->user()->orders,
+            'user' => auth()->user(),
+        ])->layoutData(['page' => 'account']);
     }
 }

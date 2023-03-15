@@ -61,7 +61,7 @@
                         class="list-unstyled row flex-nowrap flex-xl-wrap overflow-auto overflow-lg-visble mx-n2 mx-xl-0 d-xl-block mb-0">
                         @foreach ($promotionProducts as $product)
                             <li class="px-2 px-xl-0 flex-shrink-0 flex-xl-shrink-1 mb-3">
-                                <a href="/product/{{$product->id}}"
+                                <a href="/product/{{$product->slug}}"
                                     class="min-height-126 max-width-320 py-1 py-xl-2 py-wd-1 banner-bg d-flex align-items-center text-gray-90">
                                     <div class="col col-lg-6 col-xl-5 col-wd-6 mb-3 mb-lg-0 pr-lg-0">
                                         @if ($product->images->count() > 0)

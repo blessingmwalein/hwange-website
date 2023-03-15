@@ -30,12 +30,14 @@
     <link rel="stylesheet" href="/assets/vendor/fancybox/jquery.fancybox.css">
     <link rel="stylesheet" href="/assets/vendor/slick-carousel/slick/slick.css">
     <link rel="stylesheet" href="/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/assets/css/account.css">
 
     <!-- CSS Electro Template -->
     <link rel="stylesheet" href="/assets/css/theme.css">
 
     @livewireStyles
     @livewireScripts
+
 
 </head>
 
@@ -183,6 +185,34 @@
             // initialization of select picker
             $.HSCore.components.HSSelectPicker.init('.js-select');
         });
+    </script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        const Toast = Swal.mixin({
+            toast: false,
+            position: 'top',
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        window.addEventListener('alert', ({
+            detail: {
+                type,
+                message
+            }
+        }) => {
+            Toast.fire({
+                icon: type,
+                title: message
+            })
+        })
     </script>
 </body>
 

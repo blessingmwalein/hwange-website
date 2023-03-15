@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,19 +19,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/product', function () {
-    return view('pages.product');
-});
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-Route::get('/cart', function () {
-    return view('pages.cart');
-});
-Route::get('/checkout', function () {
-    return view('pages.checkout');
-});
-Route::get('/account', function () {
-    return view('pages.account');
-});
+Route::get('/cart', [OrderController::class, 'cart'])->middleware('auth:sanctum')->name('cart');
+Route::get('/checkout', [OrderController::class, 'checkout'])->middleware('auth:sanctum')->name('checkout');
+Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum')->name('user.orders');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum')->name('user.order');
+Route::get('/account', [OrderController::class, 'account'])->middleware('auth:sanctum')->name('user.account');
 Route::get('/contact', function () {
     return view('pages.contact');
 });

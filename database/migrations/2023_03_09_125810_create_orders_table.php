@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->text('order_notes');
+            $table->text('order_notes')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
         });

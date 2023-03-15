@@ -55,6 +55,8 @@ class Product extends Model
         'created_at',
     ];
 
+   
+
     public function category()
     {
         return $this->belongsTo(Category::class);

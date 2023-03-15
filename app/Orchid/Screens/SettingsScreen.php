@@ -4,6 +4,7 @@ namespace App\Orchid\Screens;
 
 use App\Models\About;
 use App\Models\Contact;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
@@ -31,6 +32,8 @@ class SettingsScreen extends Screen
             'about' => About::first(),
             'contacts' => Contact::defaultSort('created_at', 'desc')
                 ->paginate(),
+            'methods' => PaymentMethod::defaultSort('created_at', 'desc')
+                ->paginate(),
         ];
     }
 
@@ -52,6 +55,10 @@ class SettingsScreen extends Screen
     public function commandBar(): iterable
     {
         return [
+            ModalToggle::make('Payment Method')
+                ->modal('addPaymentModal')
+                ->method('addPayment')
+                ->icon('plus'),
             ModalToggle::make('Contact')
                 ->modal('addContactModal')
                 ->method('addContact')
@@ -121,6 +128,48 @@ class SettingsScreen extends Screen
                                     ]),
                             ])),
                 ]),
+                'Payment Methods' => Layout::table('methods', [
+                    TD::make('id', __('ID'))
+                        ->sort()
+                        ->cantHide()
+                        ->filter(Input::make())
+                        ->render(fn (PaymentMethod $paymentMethod) => // Please use view('path')
+                        "<img src='/storage/{$paymentMethod->icon}'
+                                              alt='sample'
+                                              class='mw-100 d-block img-fluid rounded-1' width='50'>
+                                            <span class='small text-muted mt-1 mb-0'># {$paymentMethod->id}</span>"),
+
+                    TD::make('name', 'Name')
+                        ->sort()
+                        ->filter(Input::make())
+                        ->render(fn (PaymentMethod $paymentMethod) => Str::limit($paymentMethod->name, 200)),
+
+
+                    TD::make(__('Actions'))
+                        ->align(TD::ALIGN_CENTER)
+                        ->width('100px')
+                        ->render(fn (PaymentMethod $paymentMethod) => DropDown::make()
+                            ->icon('options-vertical')
+                            ->list([
+                                ModalToggle::make('Edit')
+                                    ->modal('addContactModal')
+                                    ->asyncParameters(
+                                        [
+                                            'pay$paymentMethod' => $paymentMethod->id,
+                                        ]
+                                    )
+                                    ->method('addPayment', [
+                                        'id' => $paymentMethod->id,
+                                    ])
+                                    ->icon('pencil'),
+                                Button::make(__('Delete'))
+                                    ->icon('trash')
+                                    ->confirm(__('Are you sure you want to delete this method.'))
+                                    ->method('removeMethod', [
+                                        'id' => $paymentMethod->id,
+                                    ]),
+                            ])),
+                ]),
             ]),
             Layout::modal('editAboutModal', [
                 Layout::rows([
@@ -185,7 +234,25 @@ class SettingsScreen extends Screen
                         ->placeholder(__('Phone')),
                 ]),
             ])->title('Add Contact')
-            ->async('asyncGetData'),
+                ->async('asyncGetData'),
+            Layout::modal('addPaymentModal', [
+                Layout::rows([
+                    Input::make('method.name')
+                        ->type('text')
+                        ->max(255)
+                        ->required()
+                        ->title(__('Name'))
+                        ->placeholder(__('Name')),
+
+                    Input::make('method.icon')
+                        ->type('file')
+                        ->required()
+                        ->title(__('Icon')),
+
+
+                ]),
+            ])->title('Add Payment Method')
+                ->async('asyncGetMethod'),
         ];
     }
 
@@ -214,17 +281,54 @@ class SettingsScreen extends Screen
 
         return redirect()->route('settings');
     }
+    public function addPayment(PaymentMethod $paymentMethod, Request $request)
+    {
+        $request->validate([
+            'method.name' => 'required',
+            'method.icon' => 'required',
+        ]);
+        $url = null;
 
-    public function removeContact(Request $request){
+        if ($request->hasFile('method.icon')) {
+            $file = $request->file('method.icon');
+            $url = $file->store('payments', ['disk' => 'public']);
+        }
+
+        $paymentMethod->fill([
+            'name' => $request->input('method.name'),
+            'icon' => $url,
+        ])->save();
+
+
+        Toast::info(__('Method was saved'));
+
+        return redirect()->route('settings');
+    }
+
+    public function removeContact(Request $request)
+    {
         $contact = Contact::find($request->get('id'));
         $contact->delete();
         Toast::info(__('Contact was deleted'));
+    }
+    public function removeMethod(Request $request)
+    {
+        $method = PaymentMethod::find($request->get('id'));
+        $method->delete();
+        Toast::info(__('Method was deleted'));
     }
 
     public function asyncGetData(Contact $contact): array
     {
         return [
             'contact' => $contact,
+        ];
+    }
+
+    public function asyncGetMethod(PaymentMethod $paymentMethod): array
+    {
+        return [
+            'paymentMethod' => $paymentMethod,
         ];
     }
 }

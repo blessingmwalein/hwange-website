@@ -10,24 +10,19 @@
                           <ul class="list-inline mb-0">
                               <li
                                   class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                  <a href="#" class="u-header-topbar__nav-link text-gray-110"><i
+                                  <a href="/contact" class="u-header-topbar__nav-link text-gray-110"><i
                                           class="ec ec-map-pointer mr-1"></i> Store Locator</a>
                               </li>
-                              <li
-                                  class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                  <a href="#" class="u-header-topbar__nav-link text-gray-110"><i
-                                          class="ec ec-transport mr-1"></i> Track Your Order</a>
-                              </li>
+                           
 
                               @if (Route::has('login'))
                                   @auth
-
                                       <li
                                           class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                           <!-- Account Sidebar Toggle Button -->
 
 
-                                          <a type="submit" href="account" role="button"
+                                          <a type="submit" href="/account" role="button"
                                               class="u-header-topbar__nav-link text-gray-110">
                                               <form method="POST" action="{{ route('logout') }}">
                                                   @csrf
@@ -81,7 +76,7 @@
                               <!-- Logo -->
                               <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center"
                                   href="/" aria-label="Electro">
-                                  <img src="assets/img/logo.png" />
+                                  <img src="/assets/img/logo.png" />
                               </a>
                               <!-- End Logo -->
 
@@ -275,29 +270,43 @@
                                   </li>
                                   <!-- End Search -->
                                   <li class="col d-none d-xl-block">
-                                      <a href="" class="text-gray-90" data-toggle="tooltip"
-                                          data-placement="top" title="Compare"><i
-                                              class="font-size-22 ec ec-compare"></i></a>
+                                      <a href="/orders" class="text-gray-90" data-toggle="tooltip"
+                                          data-placement="top" title="Orders"><i
+                                              class="font-size-22 ec ec-transport"></i></a>
                                   </li>
                                   <li class="col d-none d-xl-block">
-                                      <a href="" class="text-gray-90" data-toggle="tooltip"
-                                          data-placement="top" title="Favorites"><i
-                                              class="font-size-22 ec ec-favorites"></i></a>
+                                      <a href="/account" class="text-gray-90" data-toggle="tooltip"
+                                          data-placement="top" title="My Account"><i
+                                              class="font-size-22 ec ec-user"></i></a>
                                   </li>
+
                                   <li class="col d-xl-none px-2 px-sm-3">
                                       <a href="#" class="text-gray-90" data-toggle="tooltip"
                                           data-placement="top" title="My Account"><i
                                               class="font-size-22 ec ec-user"></i></a>
                                   </li>
                                   <li class="col pr-xl-0 px-2 px-sm-3">
-                                      <a href="/cart" class="text-gray-90 position-relative d-flex"
-                                          data-toggle="tooltip" data-placement="top" title="Cart">
-                                          <i class="font-size-22 ec ec-shopping-bag"></i>
-                                          <span
-                                              class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white">2</span>
-                                          <span
-                                              class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">$1785.00</span>
-                                      </a>
+                                      @if (Route::has('login'))
+                                          @auth
+                                              <a href="/cart" class="text-gray-90 position-relative d-flex"
+                                                  data-toggle="tooltip" data-placement="top" title="Cart">
+                                                  <i class="font-size-22 ec ec-shopping-bag"></i>
+                                                  <span
+                                                      class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white">{{ $cart->cartItems->count() }}</span>
+                                                  <span
+                                                      class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">${{ $cart->total }}</span>
+                                              </a>
+                                          @else
+                                              <a href="/cart" class="text-gray-90 position-relative d-flex"
+                                                  data-toggle="tooltip" data-placement="top" title="Cart">
+                                                  <i class="font-size-22 ec ec-shopping-bag"></i>
+                                                  <span
+                                                      class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white">0</span>
+                                                  <span
+                                                      class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">$0</span>
+                                              </a>
+                                          @endauth
+                                      @endif
                                   </li>
                               </ul>
                           </div>
@@ -363,7 +372,8 @@
                                                                   data-animation-out="fadeOut" data-position="left">
                                                                   <a id="basicMegaMenu"
                                                                       class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                                                     href="/shop?category={{$category->id}}" aria-haspopup="true"
+                                                                      href="/shop?category={{ $category->id }}"
+                                                                      aria-haspopup="true"
                                                                       aria-expanded="false">{{ $category->name }}</a>
 
                                                                   <div class="hs-mega-menu vmm-tfw u-header__sub-menu"
@@ -381,14 +391,14 @@
                                                                               <ul
                                                                                   class="u-header__sub-menu-nav-group mb-3">
                                                                                   @foreach ($category->products->take(5) as $product)
-                                                                                      
                                                                                   @endforeach
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="/product/{{$product->id}}">{{$product->name}}</a></li>
+                                                                                          href="/product/{{ $product->slug }}">{{ $product->name }}</a>
+                                                                                  </li>
 
                                                                                   <li>
                                                                                       <a class="nav-link u-header__sub-menu-nav-link u-nav-divider border-top pt-2 flex-column align-items-start"
-                                                                                          href="/shop?category={{$category->id}}">
+                                                                                          href="/shop?category={{ $category->id }}">
                                                                                           <div class="">All
                                                                                               {{ $category->name }}
                                                                                           </div>

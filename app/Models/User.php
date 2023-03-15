@@ -83,4 +83,22 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //get functio to get or create cart
+    public function cart()
+    {
+        return $this->hasOne(Cart::class, 'user_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+
+    public function getCart()
+    {
+        return $this->cart()->firstOrCreate(['user_id' => $this->id]);
+    }
+
+
 }

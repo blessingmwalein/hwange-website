@@ -36,9 +36,19 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product): Response
+    public function show(Request $request)
     {
-        //
+        $product =  Product::where('slug', $request->slug)->first();
+        //get 6 related products
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->take(6)
+            ->get();
+
+        return view('pages.product', [
+            'product' => $product,
+            'relatedProducts' => $relatedProducts
+        ]);
     }
 
     /**
