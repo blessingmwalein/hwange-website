@@ -119,4 +119,8 @@ class CategoryListScreen extends Screen
         Toast::info(__('Category was removed'));
     }
 
+    public static function perPage(): int
+    {
+        return 5;
+    }
 }

@@ -40,6 +40,8 @@
 
 <body>
 
+    @livewire('top-nav')
+
     {{ $slot }}
 
 

@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
 
     <main id="content" role="main">
         <div class="bg-gray-13 bg-md-transparent">
@@ -156,4 +156,4 @@
             </div>
         </div>
     </main>
-</x-guest-layout>
+</x-app-layout>

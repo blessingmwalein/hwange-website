@@ -127,7 +127,7 @@ class CategoryEditScreen extends Screen
     public function remove(Category $category)
     {
         $category->delete();
-
+        
         Toast::info(__('Category was removed'));
 
         return redirect()->route('categories');
