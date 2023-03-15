@@ -32,6 +32,7 @@ use App\Orchid\Screens\Product\SpecificationListScreen;
 use App\Orchid\Screens\ProductScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\SettingsScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -262,3 +263,10 @@ Route::screen('orders/{order}/show', OrderSingleScreen::class)
     ->breadcrumbs(fn (Trail $trail, $order) => $trail
         ->parent('orders')
         ->push($order->id, route('orders.show', $order)));
+
+
+Route::screen('settings', SettingsScreen::class)
+    ->name('settings')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('settings'), route('settings')));

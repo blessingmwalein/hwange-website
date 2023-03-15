@@ -55,11 +55,11 @@ class ProductEditLayout extends Rows
                 ->placeholder(__('Quantity')),
 
             CheckBox::make('product.isOnPromotion')
-                ->value(0)
+                ->sendTrueOrFalse()
                 ->title('Is On Promotion'),
 
-                //can see if there is produt on edit
-                
+            //can see if there is produt on edit
+
             Select::make('product.category_id')
                 ->fromModel(Category::class, 'name', 'id')
                 ->empty('No select'),
@@ -96,7 +96,7 @@ class ProductEditLayout extends Rows
                     ->title('Currency 1')
                     ->empty('No select'),
 
-               Input::make('product.Price1')
+                Input::make('product.Price1')
                     ->type('number')
                     ->title('Price 1')
                     ->placeholder(__('000'))
@@ -107,7 +107,7 @@ class ProductEditLayout extends Rows
                     ->title('Currency 2')
                     ->empty('No select'),
 
-               Input::make('product.Price2')
+                Input::make('product.Price2')
                     ->type('number')
                     ->title('Price 2')
                     ->placeholder(__('000'))
@@ -118,7 +118,7 @@ class ProductEditLayout extends Rows
                     ->title('Currency 3')
                     ->empty('No select'),
 
-               Input::make('product.Price3')
+                Input::make('product.Price3')
                     ->type('number')
                     ->title('Price 3')
                     ->placeholder(__('000'))
@@ -129,7 +129,7 @@ class ProductEditLayout extends Rows
                     ->title('Currency 4')
                     ->empty('No select'),
 
-               Input::make('product.Price4')
+                Input::make('product.Price4')
                     ->type('number')
                     ->title('Price 4')
                     ->placeholder(__('000'))

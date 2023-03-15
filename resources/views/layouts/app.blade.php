@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
 
     @livewireStyles
+    @livewireScripts
 
 </head>
 

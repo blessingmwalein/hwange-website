@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +14,8 @@ use Orchid\Filters\Types\Where;
 use Orchid\Metrics\Chartable;
 use Orchid\Screen\AsSource;
 use Orchid\Support\Facades\Dashboard;
-class Contact extends Model
+
+class About extends Model
 {
     use Notifiable, UserAccess, AsSource, Filterable, Chartable, HasFactory, Attachable;
 
@@ -22,8 +24,11 @@ class Contact extends Model
     protected $allowedFilters = [
         'id'         => Where::class,
         'name'       => Like::class,
-        'email'    => Like::class,
-        'phone'     => Like::class,
+        'mission'    => Like::class,
+        'vision'     => Like::class,
+        'facebook'   => Like::class,
+        'linkedin'   => Like::class,
+        'whatsapp'   => Like::class,
         'updated_at' => Like::class,
         'created_at' => Like::class,
     ];
@@ -35,7 +40,12 @@ class Contact extends Model
      */
     protected $allowedSorts = [
         'id',
-        'name','email','phone',
+        'name',
+        'mission',
+        'vision',
+        'facebook',
+        'linkedin',
+        'whatsapp',
         'updated_at',
         'created_at',
     ];

@@ -25,25 +25,27 @@
                                       <li
                                           class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                           <!-- Account Sidebar Toggle Button -->
-                                        
 
-                                              <a type="submit" href="account" role="button"
-                                                  class="u-header-topbar__nav-link text-gray-110">
-                                                    <form method="POST" action="{{ route('logout') }}">
-                                              @csrf
+
+                                          <a type="submit" href="account" role="button"
+                                              class="u-header-topbar__nav-link text-gray-110">
+                                              <form method="POST" action="{{ route('logout') }}">
+                                                  @csrf
                                                   <i class="ec ec-user mr-1"></i>
                                                   {{ Auth::user()->name }}
                                                   <span class="text-gray-50">-</span>
-                                                  <button style="border:none; background-color:transparent" class="link text-gray-90 font-weight-bold font-size-15"
+                                                  <button style="border:none; background-color:transparent"
+                                                      class="link text-gray-90 font-weight-bold font-size-15"
                                                       href="#">
                                                       Logout
                                                       <span class="link__icon ml-1">
-                                                          <span class="link__icon-inner"><img width="25" src="/assets/img/power.png"/></span>
+                                                          <span class="link__icon-inner"><img width="25"
+                                                                  src="/assets/img/power.png" /></span>
                                                       </span>
                                                   </button>
-                                          </form>
+                                              </form>
 
-                                              </a>
+                                          </a>
 
 
                                           <!-- End Account Sidebar Toggle Button -->
@@ -135,8 +137,8 @@
                                                       <!-- Home Section -->
                                                       <li class="u-has-submenu u-header-collapse__submenu">
                                                           <a class="u-header-collapse__nav-link u-header-collapse__nav-pointer"
-                                                              href="javascript:;" role="button" data-toggle="collapse"
-                                                              aria-expanded="false"
+                                                              href="javascript:;" role="button"
+                                                              data-toggle="collapse" aria-expanded="false"
                                                               aria-controls="headerSidebarHomeCollapse"
                                                               data-target="#headerSidebarHomeCollapse">
                                                               Product Categories
@@ -361,7 +363,7 @@
                                                                   data-animation-out="fadeOut" data-position="left">
                                                                   <a id="basicMegaMenu"
                                                                       class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                                                      href="javascript:;" aria-haspopup="true"
+                                                                     href="/shop?category={{$category->id}}" aria-haspopup="true"
                                                                       aria-expanded="false">{{ $category->name }}</a>
 
                                                                   <div class="hs-mega-menu vmm-tfw u-header__sub-menu"
@@ -378,30 +380,15 @@
                                                                                   class="u-header__sub-menu-title">{{ $category->name }}</span>
                                                                               <ul
                                                                                   class="u-header__sub-menu-nav-group mb-3">
+                                                                                  @foreach ($category->products->take(5) as $product)
+                                                                                      
+                                                                                  @endforeach
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="#">All Computers
-                                                                                          &
-                                                                                          Accessories</a></li>
-                                                                                  <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="#">Laptops,
-                                                                                          Desktops
-                                                                                          & Monitors</a></li>
-                                                                                  <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="#">Printers &
-                                                                                          Ink</a>
-                                                                                  </li>
-                                                                                  <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="#">Networking &
-                                                                                          Internet Devices</a></li>
-                                                                                  <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="#">Computer
-                                                                                          Accessories</a></li>
-                                                                                  <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                          href="#">Software</a>
-                                                                                  </li>
+                                                                                          href="/product/{{$product->id}}">{{$product->name}}</a></li>
+
                                                                                   <li>
                                                                                       <a class="nav-link u-header__sub-menu-nav-link u-nav-divider border-top pt-2 flex-column align-items-start"
-                                                                                          href="{{ route('shop') }}">
+                                                                                          href="/shop?category={{$category->id}}">
                                                                                           <div class="">All
                                                                                               {{ $category->name }}
                                                                                           </div>

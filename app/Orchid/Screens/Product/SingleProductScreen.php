@@ -230,6 +230,7 @@ class SingleProductScreen extends Screen
 
                     CheckBox::make('product.isOnPromotion')
                         ->value(false)
+                        ->sendTrueOrFalse()
                         ->title('Is On Promotion'),
 
                     Select::make('product.category_id')
@@ -408,17 +409,13 @@ class SingleProductScreen extends Screen
                 'currency_id' => $request->input('currency_id'),
                 'price' => $request->input('price'),
             ]);
-        Toast::info(__('Price was created'));
-
+            Toast::info(__('Price was created'));
         } else {
             $checkPrice->update([
                 'price' => $request->input('price'),
             ]);
-        Toast::info(__('Price was updated'));
-
+            Toast::info(__('Price was updated'));
         }
-
-
     }
     public function addSpecifications(Product $product, Request $request)
     {

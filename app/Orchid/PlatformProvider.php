@@ -71,6 +71,12 @@ class PlatformProvider extends OrchidServiceProvider
             //     ->divider(),
 
 
+            Menu::make(__('Settings'))
+                ->icon('settings')
+                ->route('settings')
+                ->permission('platform.systems.users')
+                ->title(__('Settings')),
+                
             Menu::make(__('Users'))
                 ->icon('user')
                 ->route('platform.systems.users')
