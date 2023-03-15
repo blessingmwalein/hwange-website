@@ -19,18 +19,49 @@
                                           class="ec ec-transport mr-1"></i> Track Your Order</a>
                               </li>
 
+                              @if (Route::has('login'))
+                                  @auth
 
-                              <li
-                                  class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                  <!-- Account Sidebar Toggle Button -->
-                                  <a id="sidebarNavToggler" href="account" role="button"
-                                      class="u-header-topbar__nav-link text-gray-110">
-                                      <i class="ec ec-user mr-1"></i> Register
-                                      <span class="text-gray-50">or</span>
-                                      Sign in
-                                  </a>
-                                  <!-- End Account Sidebar Toggle Button -->
-                              </li>
+                                      <li
+                                          class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
+                                          <!-- Account Sidebar Toggle Button -->
+                                        
+
+                                              <a type="submit" href="account" role="button"
+                                                  class="u-header-topbar__nav-link text-gray-110">
+                                                    <form method="POST" action="{{ route('logout') }}">
+                                              @csrf
+                                                  <i class="ec ec-user mr-1"></i>
+                                                  {{ Auth::user()->name }}
+                                                  <span class="text-gray-50">-</span>
+                                                  <button style="border:none; background-color:transparent" class="link text-gray-90 font-weight-bold font-size-15"
+                                                      href="#">
+                                                      Logout
+                                                      <span class="link__icon ml-1">
+                                                          <span class="link__icon-inner"><img width="25" src="/assets/img/power.png"/></span>
+                                                      </span>
+                                                  </button>
+                                          </form>
+
+                                              </a>
+
+
+                                          <!-- End Account Sidebar Toggle Button -->
+                                      </li>
+                                  @else
+                                      <li
+                                          class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
+                                          <!-- Account Sidebar Toggle Button -->
+                                          <a id="sidebarNavToggler" href="login" role="button"
+                                              class="u-header-topbar__nav-link text-gray-110">
+                                              <i class="ec ec-user mr-1"></i> Register
+                                              <span class="text-gray-50">or</span>
+                                              Sign in
+                                          </a>
+                                          <!-- End Account Sidebar Toggle Button -->
+                                      </li>
+                                  @endauth
+                              @endif
                           </ul>
                       </div>
                   </div>
@@ -38,7 +69,7 @@
           </div>
           <!-- Logo-Search-header-icons -->
 
-          <div class="" >
+          <div class="">
               <div class="container">
                   <div class="row min-height-64 align-items-center position-relative">
                       <!-- Logo-offcanvas-menu -->
@@ -192,8 +223,8 @@
                                           class="js-select selectpicker dropdown-select custom-search-categories-select"
                                           data-style="btn height-40 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-2 pl-0 pr-5 py-2">
                                           <option value="one" selected>All Categories</option>
-                                          @foreach($randomCategory as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                          @foreach ($randomCategory as $category)
+                                              <option value="{{ $category->id }}">{{ $category->name }}</option>
                                           @endforeach
                                       </select>
                                       <!-- End Select -->
@@ -285,8 +316,7 @@
                               <!-- Basics Accordion -->
                               <div id="basicsAccordion">
                                   <div class="card border-0">
-                                      <div class="card-header card-collapse  border-0"
-                                           id="basicsHeadingOne">
+                                      <div class="card-header card-collapse  border-0" id="basicsHeadingOne">
                                           <button type="button"
                                               class="btn-link  btn-block d-flex card-btn pyc-10 text-lh-1 pl-0 pr-4 shadow-none btn-primary bg-transparent rounded-top-lg border-0 font-weight-bold text-gray-90"
                                               data-toggle="collapse" data-target="#basicsCollapseOne"
@@ -325,55 +355,60 @@
                                                           </li>
                                                           <!-- Nav Item MegaMenu -->
 
-                                                          @foreach($categoryWithProducts as $category)
+                                                          @foreach ($categoryWithProducts as $category)
                                                               <li class="nav-item hs-has-mega-menu u-header__nav-item"
                                                                   data-event="hover" data-animation-in="slideInUp"
                                                                   data-animation-out="fadeOut" data-position="left">
                                                                   <a id="basicMegaMenu"
-                                                                     class="nav-link u-header__nav-link u-header__nav-link-toggle"
-                                                                     href="javascript:;" aria-haspopup="true"
-                                                                     aria-expanded="false">{{$category->name}}</a>
+                                                                      class="nav-link u-header__nav-link u-header__nav-link-toggle"
+                                                                      href="javascript:;" aria-haspopup="true"
+                                                                      aria-expanded="false">{{ $category->name }}</a>
 
                                                                   <div class="hs-mega-menu vmm-tfw u-header__sub-menu"
-                                                                       aria-labelledby="basicMegaMenu">
+                                                                      aria-labelledby="basicMegaMenu">
                                                                       <div class="vmm-bg">
                                                                           <img class="img-fluid"
-                                                                               src="/storage/{{$category->icon}}"
-                                                                               width="200px"
-                                                                               height="200px"
-                                                                               alt="Image Description">
+                                                                              src="/storage/{{ $category->icon }}"
+                                                                              width="200px" height="200px"
+                                                                              alt="Image Description">
                                                                       </div>
                                                                       <div class="row u-header__mega-menu-wrapper">
                                                                           <div class="col mb-3 mb-sm-0">
-                                                                          <span
-                                                                              class="u-header__sub-menu-title">{{$category->name}}</span>
+                                                                              <span
+                                                                                  class="u-header__sub-menu-title">{{ $category->name }}</span>
                                                                               <ul
                                                                                   class="u-header__sub-menu-nav-group mb-3">
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                         href="#">All Computers &
+                                                                                          href="#">All Computers
+                                                                                          &
                                                                                           Accessories</a></li>
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                         href="#">Laptops, Desktops
+                                                                                          href="#">Laptops,
+                                                                                          Desktops
                                                                                           & Monitors</a></li>
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                         href="#">Printers & Ink</a>
+                                                                                          href="#">Printers &
+                                                                                          Ink</a>
                                                                                   </li>
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                         href="#">Networking &
+                                                                                          href="#">Networking &
                                                                                           Internet Devices</a></li>
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                         href="#">Computer
+                                                                                          href="#">Computer
                                                                                           Accessories</a></li>
                                                                                   <li><a class="nav-link u-header__sub-menu-nav-link"
-                                                                                         href="#">Software</a></li>
+                                                                                          href="#">Software</a>
+                                                                                  </li>
                                                                                   <li>
                                                                                       <a class="nav-link u-header__sub-menu-nav-link u-nav-divider border-top pt-2 flex-column align-items-start"
-                                                                                         href="{{route('shop')}}">
+                                                                                          href="{{ route('shop') }}">
                                                                                           <div class="">All
-                                                                                              {{$category->name}}</div>
+                                                                                              {{ $category->name }}
+                                                                                          </div>
                                                                                           <div
                                                                                               class="u-nav-subtext font-size-11 text-gray-30">
-                                                                                              Discover more products</div>
+                                                                                              Discover more products
+                                                                                          </div>
                                                                                       </a>
                                                                                   </li>
                                                                               </ul>

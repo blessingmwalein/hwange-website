@@ -1,7 +1,4 @@
-@extends('app')
-
-@section('content')
-
+<x-app-layout>
     <main id="content" role="main" class="cart-page">
         <!-- breadcrumb -->
         <div class="bg-gray-13 bg-md-transparent">
@@ -194,9 +191,9 @@
                                             <a class="font-size-12 text-gray-90 text-decoration-on underline-on-hover font-weight-bold mb-3 d-inline-block"
                                                 data-toggle="collapse" href="#collapseExample" role="button"
                                                 aria-expanded="false" aria-controls="collapseExample">
-                                                Calculate 
+                                                Calculate
                                             </a>
-                                          
+
                                         </div>
                                     </td>
                                 </tr>
@@ -214,5 +211,4 @@
             </div>
         </div>
     </main>
-
-@stop
+</x-app-layout>

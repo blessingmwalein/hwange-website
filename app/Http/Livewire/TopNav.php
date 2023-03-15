@@ -1,27 +1,24 @@
 <?php
 
-namespace App\View\Components;
+namespace App\Http\Livewire;
 
 use App\Models\Category;
-use Illuminate\View\Component;
-use Illuminate\View\View;
+use Livewire\Component;
 
-class AppLayout extends Component
+class TopNav extends Component
 {
-    /**
-     * Get the view / contents that represents the component.
-     */
-    public function render(): View
+    public function render()
     {
         $categories = Category::all();
         $randomCategory = $categories->count() > 3 ? $categories->random(3) : $categories->random($categories->count());
         $categoryWithProducts = Category::with('products')->get();
         $randomCategoryWithProducts = $categoryWithProducts->count() > 7 ? $categoryWithProducts->random(7) : $categoryWithProducts->random($categoryWithProducts->count());
 
-        return view('layouts.app', [
+        return view('livewire.top-nav', [
             'categories' => $categories,
             'randomCategory' => $randomCategory,
             'randomCategoryWithProducts' => $randomCategoryWithProducts,
+            'categoryWithProducts' => $categoryWithProducts,
         ]);
     }
 }

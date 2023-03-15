@@ -1,7 +1,6 @@
-@extends('app')
+<x-app-layout>
 
-@section('content')
- <main id="content" role="main" class="checkout-page">
+    <main id="content" role="main" class="checkout-page">
         <!-- breadcrumb -->
         <div class="bg-gray-13 bg-md-transparent">
             <div class="container">
@@ -9,8 +8,7 @@
                 <div class="my-md-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
-                                    href="/">Home</a></li>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
                             <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">
                                 Checkout</li>
                         </ol>
@@ -25,7 +23,7 @@
             <div class="mb-5">
                 <h1 class="text-center">Checkout</h1>
             </div>
-           
+
             <form class="js-validate" novalidate="novalidate">
                 <div class="row">
                     <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
@@ -54,8 +52,8 @@
                                                 <td>$1,100.00</td>
                                             </tr>
                                             <tr class="cart_item">
-                                                <td>Widescreen NX Mini F1 SMART NX&nbsp;<strong
-                                                        class="product-quantity">× 1</strong></td>
+                                                <td>Widescreen NX Mini F1 SMART NX&nbsp;<strong class="product-quantity">×
+                                                        1</strong></td>
                                                 <td>$685.00</td>
                                             </tr>
                                         </tbody>
@@ -75,14 +73,15 @@
                                         </tfoot>
                                     </table>
                                     <!-- End Product Content -->
-                                   
+
                                     <div class="form-group d-flex align-items-center justify-content-between px-3 mb-5">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck10"
-                                                required data-msg="Please agree terms and conditions."
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="defaultCheck10" required data-msg="Please agree terms and conditions."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
                                             <label class="form-check-label form-label" for="defaultCheck10">
-                                                I have read and agree to the website <a href="#" class="text-blue">terms
+                                                I have read and agree to the website <a href="#"
+                                                    class="text-blue">terms
                                                     and conditions </a>
                                                 <span class="text-danger">*</span>
                                             </label>
@@ -152,7 +151,7 @@
                                     <!-- End Input -->
                                 </div>
 
-                                
+
 
                                 <div class="col-md-8">
                                     <!-- Input -->
@@ -189,10 +188,10 @@
                                             City
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="cityAddress" placeholder="London"
-                                            aria-label="London" required="" data-msg="Please enter a valid address."
-                                            data-error-class="u-has-error" data-success-class="u-has-success"
-                                            autocomplete="off">
+                                        <input type="text" class="form-control" name="cityAddress"
+                                            placeholder="London" aria-label="London" required=""
+                                            data-msg="Please enter a valid address." data-error-class="u-has-error"
+                                            data-success-class="u-has-success" autocomplete="off">
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -206,8 +205,8 @@
                                         </label>
                                         <input type="text" class="form-control" name="postcode" placeholder="99999"
                                             aria-label="99999" required=""
-                                            data-msg="Please enter a postcode or zip code."
-                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                            data-msg="Please enter a postcode or zip code." data-error-class="u-has-error"
+                                            data-success-class="u-has-success">
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -226,7 +225,7 @@
                                             data-success-class="u-has-success" data-live-search="true"
                                             data-style="form-control border-color-1 font-weight-normal">
                                             <option value="">Select state</option>
-                                          
+
                                         </select>
                                     </div>
                                     <!-- End Input -->
@@ -262,8 +261,8 @@
 
                                 <div class="w-100"></div>
                             </div>
-                            
-                         
+
+
                             <div class="js-form-message mb-6">
                                 <label class="form-label">
                                     Order notes (optional)
@@ -279,5 +278,4 @@
                 </div>
             </form>
         </div>
-    </main>
-@stop
+</x-app-layout>

@@ -1,6 +1,5 @@
-@extends('app')
+<x-app-layout>
 
-@section('content')
      <main id="content" role="main">
             <!-- breadcrumb -->
             <div class="bg-gray-13 bg-md-transparent">
@@ -942,4 +941,5 @@
             </div>
 
         </main>
-@stop
+</x-app-layout>
+

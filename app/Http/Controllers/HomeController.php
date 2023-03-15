@@ -11,13 +11,11 @@ class HomeController extends Controller
 {
     public function index(): Factory|View|Application
     {
-        $categories = Category::all();
-        $randomCategory = $categories->count() > 3 ? $categories->random(3) : $categories->random($categories->count());
-        $categoryWithProducts = Category::with('products')->get();
-        $randomCategoryWithProducts = $categoryWithProducts->count() > 7 ? $categoryWithProducts->random(7) : $categoryWithProducts->random($categoryWithProducts->count());
+        // $categories = Category::all();
+        // $randomCategory = $categories->count() > 3 ? $categories->random(3) : $categories->random($categories->count());
+        // $categoryWithProducts = Category::with('products')->get();
+        // $randomCategoryWithProducts = $categoryWithProducts->count() > 7 ? $categoryWithProducts->random(7) : $categoryWithProducts->random($categoryWithProducts->count());
 
-        return view('pages.home')
-            ->with('randomCategory', $randomCategory)
-            ->with('categoryWithProducts', $randomCategoryWithProducts);
+        return view('pages.home');
     }
 }

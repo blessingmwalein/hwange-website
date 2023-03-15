@@ -1,5 +1,5 @@
-@extends('app')
-@section('content')
+<x-app-layout>
+
     <main id="content" role="main">
         <div class="bg-img-hero mb-14" style="background-image: url(/assets/img/1920x600/img1.jpg);">
             <div class="container">
@@ -381,4 +381,5 @@
             <!-- End Brand Carousel -->
         </div>
     </main>
-@endsection
+</x-app-layout>
+

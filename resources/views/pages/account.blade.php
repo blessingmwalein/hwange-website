@@ -1,6 +1,5 @@
-@extends('app')
+<x-app-layout>
 
-@section('content')
     <main id="content" role="main">
         <!-- breadcrumb -->
         <div class="bg-gray-13 bg-md-transparent">
@@ -9,9 +8,11 @@
                 <div class="my-md-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="../home/index.html">Home</a>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
+                                    href="../home/index.html">Home</a>
                             </li>
-                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">My Account
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">My
+                                Account
                             </li>
                         </ol>
                     </nav>
@@ -41,9 +42,9 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="email" class="form-control" name="email" id="signinSrEmailExample3"
-                                    placeholder="Username or Email address" aria-label="Username or Email address" required
-                                    data-msg="Please enter a valid email address." data-error-class="u-has-error"
-                                    data-success-class="u-has-success">
+                                    placeholder="Username or Email address" aria-label="Username or Email address"
+                                    required data-msg="Please enter a valid email address."
+                                    data-error-class="u-has-error" data-success-class="u-has-success">
                             </div>
                             <!-- End Form Group -->
 
@@ -51,10 +52,10 @@
                             <div class="js-form-message form-group">
                                 <label class="form-label" for="signinSrPasswordExample2">Password <span
                                         class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="password" id="signinSrPasswordExample2"
-                                    placeholder="Password" aria-label="Password" required
-                                    data-msg="Your password is invalid. Please try again." data-error-class="u-has-error"
-                                    data-success-class="u-has-success">
+                                <input type="password" class="form-control" name="password"
+                                    id="signinSrPasswordExample2" placeholder="Password" aria-label="Password" required
+                                    data-msg="Your password is invalid. Please try again."
+                                    data-error-class="u-has-error" data-success-class="u-has-success">
                             </div>
                             <!-- End Form Group -->
 
@@ -112,19 +113,21 @@
                             </div>
                             <!-- End Form Group -->
                             <p class="text-gray-90 mb-4">Your personal data will be used to support your experience
-                                throughout this website, to manage your account, and for other purposes described in our <a
-                                    href="#" class="text-blue">privacy policy.</a></p>
+                                throughout this website, to manage your account, and for other purposes described in our
+                                <a href="#" class="text-blue">privacy policy.</a></p>
                             <!-- Button -->
                             <div class="mb-6">
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary-dark-w px-5 text-white">Register</button>
+                                    <button type="submit"
+                                        class="btn btn-primary-dark-w px-5 text-white">Register</button>
                                 </div>
                             </div>
                             <!-- End Button -->
                         </form>
                         <h3 class="font-size-18 mb-3">Sign up today and you will be able to :</h3>
                         <ul class="list-group list-group-borderless">
-                            <li class="list-group-item px-0"><i class="fas fa-check mr-2 text-green font-size-16"></i> Speed
+                            <li class="list-group-item px-0"><i class="fas fa-check mr-2 text-green font-size-16"></i>
+                                Speed
                                 your way through checkout</li>
                             <li class="list-group-item px-0"><i class="fas fa-check mr-2 text-green font-size-16"></i>
                                 Track your orders easily</li>
@@ -136,4 +139,4 @@
             </div>
         </div>
     </main>
-@stop
+</x-app-layout>

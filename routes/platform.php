@@ -50,7 +50,7 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
+Route::screen('/main', DashboardScreen::class)
     ->name('platform.main');
 
 // Platform > Profile
@@ -118,10 +118,7 @@ Route::screen('example-advanced', ExampleFieldsAdvancedScreen::class)->name('pla
 
 
 Route::screen('dashboard', DashboardScreen::class, 'dashboard')
-    ->name('platform.dashboard')
-    ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
-        ->push(__('Dashboard'), route('platform.dashboard')));
+    ->name('platform.dashboard');
 
 
 Route::screen('categories', CategoryListScreen::class)
@@ -253,12 +250,12 @@ Route::screen('orders/{order}/edit', OrderEditSCreen::class)
     ->breadcrumbs(fn (Trail $trail, $order) => $trail
         ->parent('orders')
         ->push($order->id, route('orders.edit', $order)));
-        
-        Route::screen('orders/create', OrderEditSCreen::class)
-        ->name('orders.create')
-        ->breadcrumbs(fn (Trail $trail) => $trail
-            ->parent('orders')
-            ->push(__('Create'), route('orders.create')));
+
+Route::screen('orders/create', OrderEditSCreen::class)
+    ->name('orders.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('orders')
+        ->push(__('Create'), route('orders.create')));
 
 Route::screen('orders/{order}/show', OrderSingleScreen::class)
     ->name('orders.show')
