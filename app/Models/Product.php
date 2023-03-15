@@ -22,7 +22,7 @@ class Product extends Model
 
     protected $guarded;
 
-   //set slug field from name upon saving
+    //set slug field from name upon saving
     public static function boot()
     {
         parent::boot();
@@ -31,8 +31,6 @@ class Product extends Model
             $model->slug = Str::slug($model->name);
         });
     }
-
-
 
     protected $allowedFilters = [
         'id'         => Where::class,
@@ -86,9 +84,13 @@ class Product extends Model
     public function getMainPrice()
     {
         //check price with USD currency
-        return $this->prices()->whereHas('currency', function ($query) {
+        $price = $this->prices()->whereHas('currency', function ($query) {
             $query->where('code', 'USD');
         })->first();
-
+        if ($price) {
+            return $price;
+        } else {
+            return $this->prices()->first();
+        }
     }
 }

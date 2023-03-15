@@ -56,7 +56,7 @@ class ProductListLayout extends Table
             TD::make('price', 'Price')
                 ->sort()
                 ->filter(Input::make())
-                ->render(fn (Product $product) => $product->prices[0]->currency->code . Str::limit($product->prices[0]->price, 200)),
+                ->render(fn (Product $product) => $product->getMainPrice()->currency->code . Str::limit($product->getMainPrice()->price, 200)),
 
             TD::make('isOnPromotion', 'On Promotion')
                 ->sort()

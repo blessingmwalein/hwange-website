@@ -4911,5 +4911,4 @@
         </div>
         <!-- End Brand Carousel -->
     </main>
-
 </x-app-layout>
