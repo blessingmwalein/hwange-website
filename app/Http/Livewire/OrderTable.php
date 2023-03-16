@@ -27,5 +27,9 @@ class OrderTable extends Component
             return;
         }
         $this->orders = auth()->user()->orders()->where('status', $status)->get();
+
+        //creaete an array of empty strings with length
+        // $this->orders = array_fill(0, count($this->orders), '');
+
     }
 }

@@ -111,6 +111,7 @@ class ProductEditScreen extends Screen
                 'quantity' => $request->input('product.quantity'),
                 'isOnPromotion' => $request->input('product.isOnPromotion'),
                 'category_id' => $request->input('product.category_id'),
+                'brand_id' => $request->input('product.brand_id'),
                 'banner_text' => $request->input('product.banner_text'),
                 'description' => $request->input('product.description'),
             ])

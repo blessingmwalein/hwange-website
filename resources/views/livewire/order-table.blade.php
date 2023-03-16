@@ -53,7 +53,7 @@
                      <td>{{ $order->payment->name }}</td>
                      <td>{{ $order->currency->name }}</td>
                      <td>{{ $order->created_at->toDateTimeString() }}</td>
-                     <td><a href="#" class="btn px-5 btn-sm btn-primary-dark transition-3d-hover"><i
+                     <td><a href="/orders/{{$order->id}}" class="btn px-5 btn-sm btn-primary-dark transition-3d-hover"><i
                                  class="ec ec-eye mr-2 font-size-20"></i>View</a></td>
                  </tr>
 

@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Layouts\Product;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Currency;
@@ -62,6 +63,10 @@ class ProductEditLayout extends Rows
 
             Select::make('product.category_id')
                 ->fromModel(Category::class, 'name', 'id')
+                ->empty('No select'),
+                
+            Select::make('product.brand_id')
+                ->fromModel(Brand::class, 'name', 'id')
                 ->empty('No select'),
 
             Select::make('product.colors.')

@@ -101,6 +101,6 @@ class Checkout extends Component
             'message' => "Order submitted successfully"
         ]);
 
-        return redirect()->route('uers.orders');
+        return redirect()->route('user.orders');
     }
 }

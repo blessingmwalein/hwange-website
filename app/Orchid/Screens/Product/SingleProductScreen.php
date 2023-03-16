@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Product;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Product;
@@ -236,6 +237,9 @@ class SingleProductScreen extends Screen
                     Select::make('product.category_id')
                         ->fromModel(Category::class, 'name', 'id')
                         ->empty('No select'),
+                    Select::make('product.brand_id')
+                        ->fromModel(Brand::class, 'name', 'id')
+                        ->empty('No select'),
                     // Select::make('product.colors.')
                     //     ->fromModel(Color::class, 'name', 'id')
                     //     ->multiple()
@@ -327,6 +331,7 @@ class SingleProductScreen extends Screen
             'quantity' => $request->input('product.quantity'),
             'isOnPromotion' => $request->input('product.isOnPromotion'),
             'category_id' => $request->input('product.category_id'),
+            'brand_id' => $request->input('product.brand_id'),
             'description' => $request->input('product.description'),
             'banner_text' => $request->input('product.banner_text'),
         ]);

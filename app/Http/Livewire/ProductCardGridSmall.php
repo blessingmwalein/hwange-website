@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class ProductCard extends Component
+class ProductCardGridSmall extends Component
 {
     public $product;
     public $qty = 1;
@@ -18,7 +18,7 @@ class ProductCard extends Component
 
     public function render()
     {
-        return view('livewire.product-card');
+        return view('livewire.product-card-grid-small');
     }
 
     public function addToCart()
@@ -49,5 +49,6 @@ class ProductCard extends Component
         }
 
         $this->emit('addToCart');
-    }
+    }  
+
 }
