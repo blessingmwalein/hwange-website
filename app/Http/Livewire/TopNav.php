@@ -9,11 +9,27 @@ use Livewire\Component;
 class TopNav extends Component
 {
     protected $listeners = ['addToCart' => 'refreshComponent'];
-    public $cart;
+    public $category;
+    public $search;
+
+
+    // public $products;
+    //add query string variable
+    // protected $queryString = [
+    //     'category',
+    //     'search' => ['except' => ''],
+
+    // ];
 
     public function mount()
     {
         $this->cart = auth()->check() ? auth()->user()->getCart() : null;
+
+        //get quey param of category
+        $this->category = request()->query('category');
+        // dd($this->products);
+        //get search query param
+        $this->search = request()->query('search');
     }
 
     public function render()
@@ -37,5 +53,15 @@ class TopNav extends Component
     {
         // dd($productId, $qty);
         $this->cart->refresh();
+    }
+
+    //search function
+    public function search()
+    {
+        $query = request()->query();
+
+        return redirect()->route('shop', $query);
+
+
     }
 }

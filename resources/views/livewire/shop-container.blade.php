@@ -14,8 +14,8 @@
                           <div id="sidebarNav1Collapse" class="collapse" data-parent="#sidebarNav">
                               <ul id="sidebarNav1" class="list-unstyled dropdown-list">
                                   @foreach ($categories as $category)
-                                      <li><a class="dropdown-item"
-                                              href="/shop?category={{ $category->id }}">{{ $category->name }}<span
+                                      <li :wire:key="cat-{{$category->id}}"><a class="dropdown-item"
+                                              href="#" wire:click.prevent="changeCategory({{$category->id}})">{{ $category->name }}<span
                                                   class="text-gray-25 font-size-12 font-weight-normal">
                                                   ({{ $category->products->count() }})
                                               </span></a></li>
@@ -26,7 +26,7 @@
                       <li>
                           @if ($selectedCategory)
                               <a class="dropdown-current active"
-                                  href="/shop?category={{ $selectedCategory->id }}">{{ $selectedCategory->name }} <span
+                                  href="#" wire:click.prevent="changeCategory({{$category->id}})">{{ $selectedCategory->name }} <span
                                       class="text-gray-25 font-size-12 font-weight-normal">
                                       ({{ $selectedCategory->products->count() }})</span></a>
                           @else
@@ -38,8 +38,8 @@
 
                           <ul class="list-unstyled dropdown-list">
                               @foreach ($categories->take(2) as $category)
-                                  <li><a class="dropdown-item"
-                                          href="/shop?category={{ $category->id }}">{{ $category->name }}<span
+                                  <li :wire:key="cat3-{{$category->id}}"><a class="dropdown-item"
+                                          href="#" wire:click.prevent="changeCategory({{$category->id}})">{{ $category->name }}<span
                                               class="text-gray-25 font-size-12 font-weight-normal">
                                               ({{ $category->products->count() }})
                                           </span></a>
@@ -57,10 +57,10 @@
                   <div class="border-bottom pb-4 mb-4">
                       <h4 class="font-size-14 mb-3 font-weight-bold">Brands</h4>
                       @foreach ($brands as $brand)
-                          <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
-                              <div class="custom-control custom-checkbox">
-                                  <input type="checkbox" class="custom-control-input" id="brandAdidas">
-                                  <label class="custom-control-label" for="brandAdidas">{{ $brand->name }}
+                          <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1" :wire:key="brands-{{$brand->id}}">
+                              <div class="">
+                                  <input type="checkbox" class="" value="{{$brand->id}}" wire:model="selectedBrands" :wire:key="brand-{{$brand->id}}">
+                                  <label class="" for="brandAdidas">{{ $brand->name }}
                                       <span class="text-gray-25 font-size-12 font-weight-normal">
                                           ({{ $brand->products->count() }})
                                       </span>
@@ -79,10 +79,10 @@
                       <h4 class="font-size-14 mb-3 font-weight-bold">Color</h4>
 
                       @foreach ($colors as $color)
-                          <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
+                          <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1" :wire:key="colors-{{$brand->id}}">
                               <div class="custom-control custom-checkbox">
-                                  <input type="checkbox" class="custom-control-input" id="categoryTshirt">
-                                  <label class="custom-control-label" for="categoryTshirt">{{ $color->name }}</label>
+                                  <input type="checkbox" class="" value="{{$color->id}}" wire:model="selectedColors" :wire:key="color-{{$color->id}}">
+                                  <label class="" for="categoryTshirt">{{ $color->name }}</label>
                               </div>
                           </div>
                       @endforeach
@@ -92,20 +92,20 @@
                   <div class="range-slider">
                       <h4 class="font-size-14 mb-3 font-weight-bold">Price</h4>
                       <!-- Range Slider -->
-                      <input class="form-control mb-3" type="number" placeholder="Min price">
-                      <input class="form-control" type="number" placeholder="Max price">
+                      <input class="form-control mb-3" type="number" wire:model="minPrice" placeholder="Min price">
+                      <input class="form-control" type="number" wire:model="maxPrice" placeholder="Max price">
 
                       <!-- End Range Slider -->
                       <div class="mt-1 text-gray-111 d-flex mb-4">
                           <span class="mr-0dot5">Price: </span>
-                          <span>$</span>
+                          <span>${{$minPrice}}</span>
                           <span id="rangeSliderExample3MinResult" class=""></span>
                           <span class="mx-0dot5"> — </span>
-                          <span>$</span>
+                          <span>${{$maxPrice}}</span>
                           <span id="rangeSliderExample3MaxResult" class=""></span>
                       </div>
                       <button type="submit"
-                          class="btn px-4 btn-primary-dark-w py-2 rounded-lg text-white">Filter</button>
+                          class="btn px-4 btn-primary-dark-w py-2 rounded-lg text-white" wire:click="fireFilters()">Filter</button>
                   </div>
               </div>
 
@@ -215,7 +215,7 @@
                       aria-labelledby="pills-one-example1-tab" data-target-group="groups">
                       <ul class="row list-unstyled products-group no-gutters">
                           @foreach ($products as $product)
-                              <li class="col-6 col-md-3 col-wd-2gdot4 product-item">
+                              <li class="col-6 col-md-3 col-wd-2gdot4 product-item" :wire:key="product-{{$product->id}}">
                                   @livewire('product-card-grid', [
                                       'product' => $product,
                                   ])
@@ -228,7 +228,7 @@
                       aria-labelledby="pills-two-example1-tab" data-target-group="groups">
                       <ul class="row list-unstyled products-group no-gutters">
                           @foreach ($products as $product)
-                              <li class="col-6 col-md-3 col-wd-2gdot4 product-item">
+                              <li class="col-6 col-md-3 col-wd-2gdot4 product-item" :wire:key="prod2-{{$product->id}}">
                                   @livewire('product-card-grid-small', [
                                       'product' => $product,
                                   ])
@@ -242,7 +242,7 @@
                       aria-labelledby="pills-three-example1-tab" data-target-group="groups">
                       <ul class="d-block list-unstyled products-group prodcut-list-view">
                           @foreach ($products as $product)
-                              <li class="product-item remove-divider">
+                              <li class="product-item remove-divider" :wire:key="prod3-{{$product->id}}">
                                   @livewire('product-card-list', [
                                       'product' => $product,
                                   ])
@@ -254,7 +254,7 @@
                       aria-labelledby="pills-four-example1-tab" data-target-group="groups">
                       <ul class="d-block list-unstyled products-group prodcut-list-view-small">
                           @foreach ($products as $product)
-                              <li class="product-item remove-divider">
+                              <li class="product-item remove-divider" :wire:key="prod4-{{$product->id}}">
                                   @livewire('product-card-list-small', [
                                       'product' => $product,
                                   ])

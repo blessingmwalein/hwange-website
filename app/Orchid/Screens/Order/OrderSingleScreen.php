@@ -143,6 +143,7 @@ class OrderSingleScreen extends Screen
                         ->options([
                             'pending' => 'Pending',
                             'processing' => 'Processing',
+                            'paid' => 'Paid',
                             'completed' => 'Completed',
                             'cancelled' => 'Cancelled',
                         ])

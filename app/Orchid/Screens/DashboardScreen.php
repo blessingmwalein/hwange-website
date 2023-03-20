@@ -2,6 +2,9 @@
 
 namespace App\Orchid\Screens;
 
+use App\Models\Order;
+use App\Models\OrderItems;
+use App\Models\User;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -13,6 +16,8 @@ use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 use App\Orchid\Layouts\Examples\ChartBarExample;
 use App\Orchid\Layouts\Examples\ChartLineExample;
+use Carbon\Carbon;
+use Termwind\Components\Dd;
 
 class DashboardScreen extends Screen
 {
@@ -28,42 +33,97 @@ class DashboardScreen extends Screen
 
     public function query(): iterable
     {
+        //get paid orders total for that month 
+        $paidOrders = Order::where('status', 'paid')->whereMonth('created_at', Carbon::now()->month)->sum('total');
+
+       
+        //get pending orders total for that month
+        $pendingOrders = Order::where('status', 'pending')->whereMonth('created_at', Carbon::now()->month)->sum('total');
+
+        //get % increase or decrease in paid orders from previous month
+        $paidOrdersPercentage = Order::where('status', 'paid')->whereMonth('created_at', Carbon::now()->subMonth()->month)->sum('total');
+
+        //get % increase or decrease in pending orders from previous month
+        $pendingOrdersPercentage = Order::where('status', 'pending')->whereMonth('created_at', Carbon::now()->subMonth()->month)->sum('total');
+      
+
+        //get total paid orders
+        $totalPaidOrders = Order::where('status', 'paid')->sum('total');
+
+        //get new clients for that month
+        $newClients = User::whereMonth('created_at', Carbon::now()->month)->count();
+
+        //get perce
+        //get monthly sales totals 12 months in array pluck the total column  map the array to get the month name
+        $monthlySales = Order::where('status', 'paid')->whereYear('created_at', Carbon::now()->year)->get()->map(function ($total) {
+            return [
+                'total' => $total->total,
+                'month' => Carbon::parse($total->created_at)->format('M'),
+            ];
+        });
+        $monthlyOrders = Order::where('status', 'pending')->whereYear('created_at', Carbon::now()->year)->get()->map(function ($total) {
+            return [
+                'total' => $total->total,
+                'month' => Carbon::parse($total->created_at)->format('M'),
+            ];
+        });
+
+        //get most sold products for last 12 months
+        $mostSoldProducts = OrderItems::whereYear('created_at', Carbon::now()->year)->get()->map(function ($order_item) {
+            return [
+                'total' => $order_item->quantity * $order_item->product->getMainPrice()->price,
+                'name' => $order_item->product->name,
+            ];
+        });
+        $mostSoldProductsMon = OrderItems::whereYear('created_at', Carbon::now()->year)->get()->pluck('product.name')->map(function ($name) {
+            //return first word of product name
+            return explode(' ', $name)[0];
+        });
+        
+
+
+        $monthNames = collect(range(1, 12))->map(function ($month) {
+            return Carbon::now()->subMonths(12 - $month)->format('M');
+        });
+
+
+        $sales = [];
+        foreach ($monthNames as $month) {
+            $sales[] = $monthlySales->where('month', $month)->sum('total');
+        }
+        // dd($sales);
+        $orders = [];
+        foreach ($monthNames as $month) {
+            $orders[] = $monthlyOrders->where('month', $month)->sum('total');
+        }
+
+        $soldProducts =[];
+        foreach ($mostSoldProductsMon as $name) {
+            $soldProducts[] = $mostSoldProducts->where('name', $name)->sum('total');
+        }
+
+        
+       //get 
         return [
             'charts'  => [
                 [
-                    'name'   => 'Some Data',
-                    'values' => [25, 40, 30, 35, 8, 52, 17],
-                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                    'name'   => 'Sales',
+                    'values' => $sales,
+                    'labels' => $monthNames,
                 ],
                 [
-                    'name'   => 'Another Set',
-                    'values' => [25, 50, -10, 15, 18, 32, 27],
-                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
+                    'name'   => 'Orders',
+                    'values' => $orders,
+                    'labels' => $monthNames,
                 ],
-                [
-                    'name'   => 'Yet Another',
-                    'values' => [15, 20, -3, -15, 58, 12, -17],
-                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
-                ],
-                [
-                    'name'   => 'And Last',
-                    'values' => [10, 33, -8, -3, 70, 20, -34],
-                    'labels' => ['12am-3am', '3am-6am', '6am-9am', '9am-12pm', '12pm-3pm', '3pm-6pm', '6pm-9pm'],
-                ],
+             
             ],
-            'table'   => [
-                new Repository(['id' => 100, 'name' => self::TEXT_EXAMPLE, 'price' => 10.24, 'created_at' => '01.01.2020']),
-                new Repository(['id' => 200, 'name' => self::TEXT_EXAMPLE, 'price' => 65.9, 'created_at' => '01.01.2020']),
-                new Repository(['id' => 300, 'name' => self::TEXT_EXAMPLE, 'price' => 754.2, 'created_at' => '01.01.2020']),
-                new Repository(['id' => 400, 'name' => self::TEXT_EXAMPLE, 'price' => 0.1, 'created_at' => '01.01.2020']),
-                new Repository(['id' => 500, 'name' => self::TEXT_EXAMPLE, 'price' => 0.15, 'created_at' => '01.01.2020']),
 
-            ],
             'metrics' => [
-                'sales'    => ['value' => number_format(6851), 'diff' => 10.08],
-                'visitors' => ['value' => number_format(24668), 'diff' => -30.76],
-                'orders'   => ['value' => number_format(10000), 'diff' => 0],
-                'total'    => number_format(65661),
+                'paid_orders'    => ['value' => number_format($paidOrders), 'diff' => $paidOrdersPercentage],
+                'pending_orders' => ['value' => number_format($pendingOrders), 'diff' => $pendingOrdersPercentage],
+                'orders'   =>  number_format($totalPaidOrders),
+                'clients'    =>$newClients,
             ],
         ];
     }
@@ -86,34 +146,7 @@ class DashboardScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make('Export file')
-                ->method('export')
-                ->icon('cloud-download')
-                ->rawClick()
-                ->novalidate(),
-
-            DropDown::make('Dropdown button')
-                ->icon('folder-alt')
-                ->list([
-
-                    Button::make('Action')
-                        ->method('showToast')
-                        ->icon('bag'),
-
-                    Button::make('Another action')
-                        ->method('showToast')
-                        ->icon('bubbles'),
-
-                    Button::make('Something else here')
-                        ->method('showToast')
-                        ->icon('bulb'),
-
-                    Button::make('Confirm button')
-                        ->method('showToast')
-                        ->confirm('If you click you will see a toast message')
-                        ->novalidate()
-                        ->icon('shield'),
-                ]),
+           
         ];
     }
 
@@ -126,18 +159,15 @@ class DashboardScreen extends Screen
     {
         return [
             Layout::metrics([
-                'Sales Today'    => 'metrics.sales',
-                'Visitors Today' => 'metrics.visitors',
-                'Pending Orders' => 'metrics.orders',
-                'Total Earnings' => 'metrics.total',
+                'This Month Paid Orders($)'    => 'metrics.paid_orders',
+                'This Month Pending Orders($)' => 'metrics.pending_orders',
+                'Total Earnings($)' => 'metrics.orders',
+                'This Month New Clients' => 'metrics.clients',
             ]),
 
             Layout::columns([
-                ChartLineExample::make('charts', 'Monthly Sales')
-                    ->description('It is simple Line Charts with different colors.'),
-
-                ChartBarExample::make('charts', 'Sales By Category')
-                    ->description('It is simple Bar Charts with different colors.'),
+                ChartLineExample::make('charts', 'Monthly Sales & Orders')
+                    ->description('Line chart to show monthly salesand orders'),
             ]),
 
         ];

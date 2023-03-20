@@ -23,6 +23,14 @@ class ProductCard extends Component
 
     public function addToCart()
     {
+        //check if user is logged in
+        if (!auth()->check()) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => 'error',
+                'message' => "Please login to add product to cart"
+            ]);
+            return;
+        }
         $cart = auth()->user()->getCart();
         //check if product is already in cart
         $cartItem = $cart->cartItems->where('product_id', $this->product->id)->first();
