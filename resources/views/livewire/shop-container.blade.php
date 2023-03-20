@@ -106,6 +106,8 @@
                       </div>
                       <button type="submit"
                           class="btn px-4 btn-primary-dark-w py-2 rounded-lg text-white" wire:click="fireFilters()">Filter</button>
+                      <a
+                          class="btn px-4 btn-primary-dark-w py-2 rounded-lg text-white" href="/shop">Clear Filters</a>
                   </div>
               </div>
 

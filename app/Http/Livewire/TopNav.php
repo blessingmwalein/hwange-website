@@ -11,7 +11,7 @@ class TopNav extends Component
     protected $listeners = ['addToCart' => 'refreshComponent'];
     public $category;
     public $search;
-
+    public $cart;
 
     // public $products;
     //add query string variable
@@ -60,7 +60,7 @@ class TopNav extends Component
     {
         $query = request()->query();
 
-        return redirect()->route('shop', $query);
+        return redirect('shop?search=' . $this->search);
 
 
     }
