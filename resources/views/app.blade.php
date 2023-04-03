@@ -34,6 +34,7 @@
 
     <!-- CSS Electro Template -->
     <link rel="stylesheet" href="/assets/css/theme.css">
+    
 </head>
 
 <body>

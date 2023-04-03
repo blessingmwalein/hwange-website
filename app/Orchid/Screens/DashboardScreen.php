@@ -84,38 +84,29 @@ class DashboardScreen extends Screen
 
         $monthNames = collect(range(1, 12))->map(function ($month) {
             return Carbon::now()->subMonths(12 - $month)->format('M');
-        });
+        })->toArray();
 
 
         $sales = [];
-        foreach ($monthNames as $month) {
+        foreach ($monthNames as  $key => $month) {
+            
             $sales[] = $monthlySales->where('month', $month)->sum('total');
         }
-        // dd($sales);
         $orders = [];
         foreach ($monthNames as $month) {
             $orders[] = $monthlyOrders->where('month', $month)->sum('total');
         }
+        dd($sales);
 
-        $soldProducts =[];
-        foreach ($mostSoldProductsMon as $name) {
-            $soldProducts[] = $mostSoldProducts->where('name', $name)->sum('total');
-        }
-
-        
-       //get 
         return [
             'charts'  => [
                 [
                     'name'   => 'Sales',
+                    'labels' => $monthNames,
                     'values' => $sales,
-                    'labels' => $monthNames,
+
                 ],
-                [
-                    'name'   => 'Orders',
-                    'values' => $orders,
-                    'labels' => $monthNames,
-                ],
+               
              
             ],
 
@@ -136,6 +127,26 @@ class DashboardScreen extends Screen
     public function name(): ?string
     {
         return 'Dashboard';
+    }
+
+    //create function to get month index from month name
+    public function getMonthIndex($month)
+    {
+        $months = [
+            'Jan' => 0,
+            'Feb' => 1,
+            'Mar' => 2,
+            'Apr' => 3,
+            'May' => 4,
+            'Jun' => 5,
+            'Jul' => 6,
+            'Aug' => 7,
+            'Sep' => 8,
+            'Oct' => 9,
+            'Nov' => 10,
+            'Dec' => 11,
+        ];
+        return $months[$month];
     }
 
     /**
@@ -167,7 +178,7 @@ class DashboardScreen extends Screen
 
             Layout::columns([
                 ChartLineExample::make('charts', 'Monthly Sales & Orders')
-                    ->description('Line chart to show monthly salesand orders'),
+                    ->description('Line chart to show monthly sales and orders'),
             ]),
 
         ];

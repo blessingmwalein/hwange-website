@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Currency;
 use App\Models\PaymentMethod;
 use Livewire\Component;
+use PDF;
 
 class Checkout extends Component
 {
@@ -102,5 +103,14 @@ class Checkout extends Component
         ]);
 
         return redirect()->route('user.orders');
+    }
+
+    public function downloadView()
+    {
+        $pdf = PDF::loadView('pages.quote', [
+            'cart' => auth()->user()->getCart(),
+            'user' => auth()->user(),
+        ]);
+        return $pdf->stream('quote.pdf');
     }
 }

@@ -89,4 +89,14 @@ class OrderController extends Controller
             'user' => auth()->user(),
         ])->layoutData(['page' => 'account']);
     }
+
+    public function quote()
+    {
+
+        $pdf = PDF::loadView('pages.quote', [
+            'cart' => auth()->user()->getCart(),
+            'user' => auth()->user(),
+        ]);
+        return $pdf->stream('quote.pdf');
+    }
 }
